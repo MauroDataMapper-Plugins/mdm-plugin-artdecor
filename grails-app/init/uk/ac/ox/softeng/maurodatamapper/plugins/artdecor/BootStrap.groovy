@@ -15,21 +15,22 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package uk.ac.ox.softeng.maurodatamapper.plugins.template
+package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
-import uk.ac.ox.softeng.maurodatamapper.provider.plugin.AbstractMauroDataMapperPlugin
 
-class TemplatePlugin extends AbstractMauroDataMapperPlugin {
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
+import uk.ac.ox.softeng.maurodatamapper.datamodel.bootstrap.BootstrapModels
 
-    @Override
-    String getName() {
-        'Plugin : XXXXXXX'
-    }
+class BootStrap {
 
-    @Override
-    Closure doWithSpring() {
-        {->
-            // This closure will be passed to grails.spring.BeanBuilder
+    ArtDecorDataModelImporterProviderService artDecorProviderService
+
+    def init = { servletContext ->
+
+        DataModel.withNewTransaction {
+            DataModel entity = DataModel.findByLabel(BootstrapModels.COMPLEX_DATAMODEL_NAME)
         }
+    }
+    def destroy = {
     }
 }
