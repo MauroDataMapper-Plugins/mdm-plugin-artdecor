@@ -1,0 +1,2238 @@
+{
+  "datasets": [
+    {
+      "dataset": [
+            {
+              "id": "2.16.840.1.113883.3.1937.777.28.2.10927",
+              "effectiveDate": "2019-04-30T17:00:00",
+              "statusCode": "draft",
+              "type": "group",
+              "minimumMultiplicity": "0",
+              "maximumMultiplicity": "1",
+              "conformance": "R",
+              "isMandatory": "false",
+              "iddisplay": "prsb03-dataelement-10927",
+              "shortName": "problem_list",
+              "implementation": [
+                {
+                  "shortName": "problem_list"
+                }
+              ],
+              "name": [
+                {
+                  "language": "en-GB",
+                  "content": "Problem list"
+                }
+              ],
+              "desc": [
+                {
+                  "language": "en-GB",
+                  "content": "A summary of the problems that require investigation or treatment."
+                }
+              ],
+              "concept": [
+                {
+                  "id": "2.16.840.1.113883.3.1937.777.28.2.10928",
+                  "effectiveDate": "2019-04-30T17:01:01",
+                  "statusCode": "draft",
+                  "type": "group",
+                  "minimumMultiplicity": "0",
+                  "maximumMultiplicity": "*",
+                  "conformance": "R",
+                  "isMandatory": "false",
+                  "iddisplay": "prsb03-dataelement-10928",
+                  "shortName": "problem_list_record_entry",
+                  "implementation": [
+                    {
+                      "shortName": "problem_list_record_entry"
+                    }
+                  ],
+                  "name": [
+                    {
+                      "language": "en-GB",
+                      "content": "Problem list record entry"
+                    }
+                  ],
+                  "desc": [
+                    {
+                      "language": "en-GB",
+                      "content": "This is a problem list record entry.  There may be 0 to many record entries under problem list.  Each record entry is made up of a number of elements or data items. "
+                    }
+                  ],
+                  "concept": [
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10929",
+                      "effectiveDate": "2019-04-30T17:04:55",
+                      "statusCode": "draft",
+                      "type": "item",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10929",
+                      "shortName": "date",
+                      "implementation": [
+                        {
+                          "shortName": "date"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Date "
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "The date the problem was identified."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10111",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10111",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Date Recorded"
+                            }
+                          ]
+                        }
+                      ],
+                      "operationalization": [
+                        {
+                          "language": "en-GB",
+                          "content": "Date and time"
+                        }
+                      ],
+                      "valueDomain": [
+                        {
+                          "type": "datetime",
+                          "property": [
+                            {
+                              "timeStampPrecision": "YMDHM"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.12133",
+                      "effectiveDate": "2019-05-31T16:03:47",
+                      "statusCode": "draft",
+                      "type": "group",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-12133",
+                      "shortName": "performing_professional",
+                      "implementation": [
+                        {
+                          "shortName": "performing_professional"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Performing professional"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "The professional who identified the problem."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.11281",
+                          "flexibility": "2019-05-30T11:53:30",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "group",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2019-05-30T11:53:30",
+                          "refdisplay": "prsb03-dataelement-11281",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Performing professional"
+                            }
+                          ]
+                        }
+                      ],
+                      "concept": [
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12134",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12134",
+                          "shortName": "name",
+                          "implementation": [
+                            {
+                              "shortName": "name"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11282",
+                              "effectiveDate": "2019-05-30T11:57:38",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T11:57:38",
+                              "refdisplay": "prsb03-dataelement-11282"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Name"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The name of the professional."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Practitioner.name"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text."
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "70"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12135",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12135",
+                          "shortName": "role",
+                          "implementation": [
+                            {
+                              "shortName": "role"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11283",
+                              "effectiveDate": "2019-05-30T11:58:48",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T11:58:48",
+                              "refdisplay": "prsb03-dataelement-11283"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Role"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The role the professional has in relation to the person e.g. GP, physiotherapist, community nurse, social worker etc"
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Practitioner.PractitionerRole.code"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "FHIR value set :- "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "code",
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.11283.20190530115848.0"
+                                }
+                              ]
+                            }
+                          ],
+                          "valueSet": [
+                            {
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.11283.20190530115848.0"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12136",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12136",
+                          "shortName": "grade",
+                          "implementation": [
+                            {
+                              "shortName": "grade"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11288",
+                              "effectiveDate": "2019-05-30T12:19:40",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:19:40",
+                              "refdisplay": "prsb03-dataelement-11288"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Grade"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The grade of the professional."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "table": [
+                                {
+                                  "class": "detail spaced",
+                                  "width": "100%",
+                                  "style": "font-family: Arial, Helvetica, Geneva, sans-serif; font-size: 12px; max-width: 100%; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(51, 51, 51);",
+                                  "tbody": [
+                                    {
+                                      "tr": [
+                                        {
+                                          "td": [
+                                            {
+                                              "colspan": "3",
+                                              "rowspan": "1",
+                                              "style": "vertical-align: top;",
+                                              "div": [
+                                                {
+                                                  "class": "xforms-control xforms-output xforms-mediatype-text-html xforms-mediatype-text",
+                                                  "id": "xf-878≡xf-1212",
+                                                  "style": "display: inline; zoom: 1;",
+                                                  "div": [
+                                                    {
+                                                      "class": "xforms-output-output",
+                                                      "id": "xf-878≡xf-1212≡≡c",
+                                                      "style": "zoom: 1;",
+                                                      "content": "PractitionerRole.code"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "text",
+                              "property": [
+                                {
+                                  "maxLength": "150"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12137",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12137",
+                          "shortName": "speciality",
+                          "implementation": [
+                            {
+                              "shortName": "speciality"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11284",
+                              "effectiveDate": "2019-05-30T12:01:15",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:01:15",
+                              "refdisplay": "prsb03-dataelement-11284"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Speciality"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The specialty of the professional e.g. physiotherapy, oncology, mental health etc"
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "PractitionerRole.speciality"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary -  &#160;"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "3"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12138",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12138",
+                          "shortName": "professional_identifier",
+                          "implementation": [
+                            {
+                              "shortName": "professional_identifier"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11285",
+                              "effectiveDate": "2019-05-30T12:02:46",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:02:46",
+                              "refdisplay": "prsb03-dataelement-11285"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Professional identifier"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Professional identifier for the professional e.g. GMC number, HCPC number etc or the personal identifier used by the local organisation."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Practitioner.identifier (for professional national identifiers),PractitionerRole.identifier (for local role identifiers)"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary : - "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "32"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12139",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "group",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12139",
+                          "shortName": "organisation",
+                          "implementation": [
+                            {
+                              "shortName": "organisation"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11286",
+                              "effectiveDate": "2019-05-30T12:17:19",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "group",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:17:19",
+                              "refdisplay": "prsb03-dataelement-11286"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Organisation"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The name of the organisation the professional works for."
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12140",
+                          "effectiveDate": "2019-05-31T16:04:17",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12140",
+                          "shortName": "contact_details",
+                          "implementation": [
+                            {
+                              "shortName": "contact_details"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11287",
+                              "effectiveDate": "2019-05-30T12:18:13",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:18:13",
+                              "refdisplay": "prsb03-dataelement-11287"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Contact details"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Contact details of the professional&#160;"
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "div": [
+                                {
+                                  "tabindex": "0",
+                                  "role": "group",
+                                  "style": "outline: none; zoom: 1;",
+                                  "table": [
+                                    {
+                                      "border": "0",
+                                      "cellpadding": "0",
+                                      "cellspacing": "0",
+                                      "width": "408",
+                                      "style": "border-collapse: collapse; width: 306pt;",
+                                      "tbody": [
+                                        {
+                                          "tr": [
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "width": "408",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt; width: 306pt;",
+                                                  "div": [
+                                                    {
+                                                      "style": "overflow: hidden; padding-bottom: 0px; padding-top: 0px; width: auto;",
+                                                      "div": [
+                                                        {
+                                                          "dir": "ltr",
+                                                          "style": "overflow: auto; position: relative;",
+                                                          "div": [
+                                                            {
+                                                              "spellcheck": "false",
+                                                              "style": "resize: none; bottom: 4px;",
+                                                              "div": [
+                                                                {
+                                                                  "dir": "ltr",
+                                                                  "tabindex": "0",
+                                                                  "role": "combobox",
+                                                                  "contenteditable": "false",
+                                                                  "docs-unhandledkeys": "",
+                                                                  "aria-autocomplete": "list",
+                                                                  "style": "outline: none; -webkit-user-modify: read-only; transform: translateZ(0px); overflow-wrap: break-word; -webkit-line-break: after-white-space;",
+                                                                  "content": "Practitioner.telecom"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt;",
+                                                  "content": "PractitionerRole.telecom"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt;",
+                                                  "content": "Organisation.telcom"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary - "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "35"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10931",
+                      "effectiveDate": "2019-04-30T17:07:45",
+                      "statusCode": "draft",
+                      "type": "group",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10931",
+                      "shortName": "location",
+                      "implementation": [
+                        {
+                          "shortName": "location"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Location"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "The location the problem was identified."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10113",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10113",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Location"
+                            }
+                          ]
+                        }
+                      ],
+                      "concept": [
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.13242",
+                          "effectiveDate": "2020-07-27T18:27:08",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-13242",
+                          "shortName": "coded_value",
+                          "implementation": [
+                            {
+                              "shortName": "coded_value"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Coded value"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The coded value for location."
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary : - "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "minLength": "3",
+                                  "maxLength": "5"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.13243",
+                          "effectiveDate": "2020-07-27T18:31:13",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-13243",
+                          "shortName": "free_text",
+                          "implementation": [
+                            {
+                              "shortName": "free_text"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.13220",
+                              "effectiveDate": "2020-07-08T12:57:49",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2020-07-08T12:57:49",
+                              "refdisplay": "prsb03-dataelement-13220"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text field to be used if no code is available"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "text",
+                              "property": [
+                                {
+                                  "maxLength": "150"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10932",
+                      "effectiveDate": "2019-04-30T17:08:40",
+                      "statusCode": "draft",
+                      "type": "group",
+                      "minimumMultiplicity": "1",
+                      "maximumMultiplicity": "1",
+                      "conformance": "M",
+                      "isMandatory": "true",
+                      "iddisplay": "prsb03-dataelement-10932",
+                      "shortName": "problem",
+                      "implementation": [
+                        {
+                          "shortName": "problem"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Problem"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "A condition which needs addressing and so is important for every professional to know about when seeing the person.  Problems may include diagnoses, symptoms, disabilities and social or behavioural issues, and comprise the ‘Problem list’"
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10114",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10114",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Problem"
+                            }
+                          ]
+                        }
+                      ],
+                      "concept": [
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.13244",
+                          "effectiveDate": "2020-07-27T18:43:32",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-13244",
+                          "shortName": "coded_value",
+                          "implementation": [
+                            {
+                              "shortName": "coded_value"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Coded value "
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The coded value for the problem list."
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "SNOMED CT : - "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "code",
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.13244.20200727184332.0"
+                                }
+                              ]
+                            }
+                          ],
+                          "valueSet": [
+                            {
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.13244.20200727184332.0"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.13245",
+                          "effectiveDate": "2020-07-27T18:46:30",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-13245",
+                          "shortName": "free_text",
+                          "implementation": [
+                            {
+                              "shortName": "free_text"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.13220",
+                              "effectiveDate": "2020-07-08T12:57:49",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2020-07-08T12:57:49",
+                              "refdisplay": "prsb03-dataelement-13220"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text field to be used if no code is available"
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "text",
+                              "property": [
+                                {
+                                  "maxLength": "150"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10933",
+                      "effectiveDate": "2019-04-30T17:10:25",
+                      "statusCode": "draft",
+                      "type": "item",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10933",
+                      "shortName": "onset_date",
+                      "implementation": [
+                        {
+                          "shortName": "onset_date"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Onset date"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "A date or estimated date that the problem began"
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10115",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10115",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Onset date"
+                            }
+                          ]
+                        }
+                      ],
+                      "operationalization": [
+                        {
+                          "language": "en-GB",
+                          "content": "Date and time"
+                        }
+                      ],
+                      "valueDomain": [
+                        {
+                          "type": "datetime",
+                          "property": [
+                            {
+                              "timeStampPrecision": "YMDHM"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10934",
+                      "effectiveDate": "2019-04-30T17:10:59",
+                      "statusCode": "draft",
+                      "type": "item",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10934",
+                      "shortName": "end_date",
+                      "implementation": [
+                        {
+                          "shortName": "end_date"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "End Date"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "The date or estimated date the problem was resolved."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10116",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10116",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "End Date"
+                            }
+                          ]
+                        }
+                      ],
+                      "operationalization": [
+                        {
+                          "language": "en-GB",
+                          "content": "Date and time."
+                        }
+                      ],
+                      "valueDomain": [
+                        {
+                          "type": "datetime",
+                          "property": [
+                            {
+                              "timeStampPrecision": "YMDHM"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10935",
+                      "effectiveDate": "2019-04-30T17:11:55",
+                      "statusCode": "draft",
+                      "type": "item",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10935",
+                      "shortName": "stage_of_disease",
+                      "implementation": [
+                        {
+                          "shortName": "stage_of_disease"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Stage of disease"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "The stage of the disease where relevant."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10117",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10117",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Stage of Disease"
+                            }
+                          ]
+                        }
+                      ],
+                      "operationalization": [
+                        {
+                          "language": "en-GB",
+                          "content": "Free text"
+                        }
+                      ],
+                      "valueDomain": [
+                        {
+                          "type": "text",
+                          "property": [
+                            {
+                              "maxLength": "150"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.12141",
+                      "effectiveDate": "2019-05-31T16:04:31",
+                      "statusCode": "draft",
+                      "type": "group",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "1",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-12141",
+                      "shortName": "person_completing_record",
+                      "implementation": [
+                        {
+                          "shortName": "person_completing_record"
+                        }
+                      ],
+                      "inherit": [
+                        {
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.11289",
+                          "effectiveDate": "2019-05-30T12:24:39",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "group",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2019-05-30T12:24:39",
+                          "refdisplay": "prsb03-dataelement-11289"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Person completing record"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "Details of the person completing the record."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.319",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "group",
+                          "iStatusCode": "cancelled",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-319",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Person completing record"
+                            }
+                          ]
+                        }
+                      ],
+                      "concept": [
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12142",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12142",
+                          "shortName": "name",
+                          "implementation": [
+                            {
+                              "shortName": "name"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11290",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11290"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Name"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The name of the person completing the record. \n"
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Composition.author.Practitioner.name"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10219",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10219",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Name"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text."
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "70"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12143",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12143",
+                          "shortName": "role",
+                          "implementation": [
+                            {
+                              "shortName": "role"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11291",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11291"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Role"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The organisational role of the person completing record."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Composition.author.Practitioner.PractitionerRole.code"
+                            }
+                          ],
+                          "property": [
+                            {
+                              "name": "FHIR",
+                              "content": "PractitionerRole.code of the practitioner completing the record"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10220",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10220",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Role"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "FHIR value set :- "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "code",
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.11291.20190530122539.0"
+                                }
+                              ]
+                            }
+                          ],
+                          "valueSet": [
+                            {
+                              "conceptList": [
+                                {
+                                  "id": "2.16.840.1.113883.3.1937.777.28.2.11291.20190530122539.0"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12144",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12144",
+                          "shortName": "grade",
+                          "implementation": [
+                            {
+                              "shortName": "grade"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11292",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11292"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Grade"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The grade of the person completing the record."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "PractitionerRole.code"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10221",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10221",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Grade"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Free text."
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "text",
+                              "property": [
+                                {
+                                  "maxLength": "150"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12145",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12145",
+                          "shortName": "specialty",
+                          "implementation": [
+                            {
+                              "shortName": "specialty"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11293",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11293"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Specialty"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The main specialty of the person completing the record."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "PractitionerRole.speciality"
+                            }
+                          ],
+                          "property": [
+                            {
+                              "name": "FHIR",
+                              "content": "PractitionerRole.specialty"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10222",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10222",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Specialty"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary :- Care professional main speciality"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "3"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12146",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "group",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12146",
+                          "shortName": "organisation",
+                          "implementation": [
+                            {
+                              "shortName": "organisation"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11294",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "group",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11294"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Organisation"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The organisation the person completing the record works for."
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10226",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10226",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Organisation"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12147",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12147",
+                          "shortName": "professional_identifier",
+                          "implementation": [
+                            {
+                              "shortName": "professional_identifier"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11295",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11295"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Professional identifier"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Professional identifier for the person completing the record e.g. GMC number, HCPC number etc, or the personal identifier used by the local organisation."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Practitioner.identifier (for professional national identifiers),PractitionerRole.identifier (for local role identifiers)"
+                            }
+                          ],
+                          "property": [
+                            {
+                              "name": "FHIR",
+                              "content": "PractitionerRole.Practitioner.identifier (local) Practitioner.identifer (professional)"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10223",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10223",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Professional identifier"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary :- "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "32"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12148",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12148",
+                          "shortName": "date_completed",
+                          "implementation": [
+                            {
+                              "shortName": "date_completed"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11296",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11296"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Date completed"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "The date and time the record was completed."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "content": "Composition.date"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10224",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10224",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Date completed"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "Date and time.&#160;"
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "datetime",
+                              "property": [
+                                {
+                                  "timeStampPrecision": "YMDHM"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "2.16.840.1.113883.3.1937.777.28.2.12149",
+                          "effectiveDate": "2019-05-31T16:04:53",
+                          "statusCode": "draft",
+                          "type": "item",
+                          "minimumMultiplicity": "0",
+                          "maximumMultiplicity": "1",
+                          "conformance": "R",
+                          "isMandatory": "false",
+                          "iddisplay": "prsb03-dataelement-12149",
+                          "shortName": "contact_details",
+                          "implementation": [
+                            {
+                              "shortName": "contact_details"
+                            }
+                          ],
+                          "inherit": [
+                            {
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.11297",
+                              "effectiveDate": "2019-05-30T12:25:39",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "draft",
+                              "iEffectiveDate": "2019-05-30T12:25:39",
+                              "refdisplay": "prsb03-dataelement-11297"
+                            }
+                          ],
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Contact details"
+                            }
+                          ],
+                          "desc": [
+                            {
+                              "language": "en-GB",
+                              "content": "Contact details of the person completing the record&#160;(e.g. telephone number, email address etc.)."
+                            }
+                          ],
+                          "rationale": [
+                            {
+                              "language": "en-GB",
+                              "div": [
+                                {
+                                  "tabindex": "0",
+                                  "role": "group",
+                                  "style": "outline: none; zoom: 1;",
+                                  "table": [
+                                    {
+                                      "border": "0",
+                                      "cellpadding": "0",
+                                      "cellspacing": "0",
+                                      "width": "408",
+                                      "style": "border-collapse: collapse; width: 306pt;",
+                                      "tbody": [
+                                        {
+                                          "tr": [
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "width": "408",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt; width: 306pt;",
+                                                  "div": [
+                                                    {
+                                                      "style": "overflow: hidden; padding-bottom: 0px; padding-top: 0px; width: auto;",
+                                                      "div": [
+                                                        {
+                                                          "dir": "ltr",
+                                                          "style": "overflow: auto; position: relative;",
+                                                          "div": [
+                                                            {
+                                                              "spellcheck": "false",
+                                                              "style": "resize: none; bottom: 4px;",
+                                                              "div": [
+                                                                {
+                                                                  "dir": "ltr",
+                                                                  "tabindex": "0",
+                                                                  "role": "combobox",
+                                                                  "contenteditable": "false",
+                                                                  "docs-unhandledkeys": "",
+                                                                  "aria-autocomplete": "list",
+                                                                  "style": "outline: none; -webkit-user-modify: read-only; transform: translateZ(0px); overflow-wrap: break-word; -webkit-line-break: after-white-space;",
+                                                                  "content": "Practitioner.telecom"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt;",
+                                                  "content": "PractitionerRole.telecom"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "height": "23",
+                                              "style": "height: 17pt;",
+                                              "td": [
+                                                {
+                                                  "colspan": "1",
+                                                  "rowspan": "1",
+                                                  "class": "xl65",
+                                                  "height": "23",
+                                                  "style": "padding-top: 1px; padding-right: 1px; padding-left: 1px; vertical-align: bottom; border: none; height: 17pt;",
+                                                  "content": "Organisation.telcom"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "property": [
+                            {
+                              "name": "FHIR",
+                              "content": "PractitionerRole.telecom"
+                            }
+                          ],
+                          "relationship": [
+                            {
+                              "type": "SPEC",
+                              "ref": "2.16.840.1.113883.3.1937.777.28.2.10225",
+                              "flexibility": "2018-10-31T00:00:00",
+                              "prefix": "prsb03-",
+                              "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                              "datasetEffectiveDate": "2018-10-31T00:00:00",
+                              "datasetStatusCode": "draft",
+                              "datasetVersionLabel": "1",
+                              "iType": "item",
+                              "iStatusCode": "cancelled",
+                              "iEffectiveDate": "2018-10-31T00:00:00",
+                              "refdisplay": "prsb03-dataelement-10225",
+                              "name": [
+                                {
+                                  "language": "en-GB",
+                                  "content": "Contact details"
+                                }
+                              ]
+                            }
+                          ],
+                          "operationalization": [
+                            {
+                              "language": "en-GB",
+                              "content": "NHS data dictionary : - "
+                            }
+                          ],
+                          "valueDomain": [
+                            {
+                              "type": "string",
+                              "property": [
+                                {
+                                  "maxLength": "35"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "2.16.840.1.113883.3.1937.777.28.2.10936",
+                      "effectiveDate": "2019-04-30T17:13:22",
+                      "statusCode": "draft",
+                      "type": "item",
+                      "minimumMultiplicity": "0",
+                      "maximumMultiplicity": "*",
+                      "conformance": "R",
+                      "isMandatory": "false",
+                      "iddisplay": "prsb03-dataelement-10936",
+                      "shortName": "comment",
+                      "implementation": [
+                        {
+                          "shortName": "comment"
+                        }
+                      ],
+                      "name": [
+                        {
+                          "language": "en-GB",
+                          "content": "Comment"
+                        }
+                      ],
+                      "desc": [
+                        {
+                          "language": "en-GB",
+                          "content": "Supporting text may be given covering the problem."
+                        }
+                      ],
+                      "relationship": [
+                        {
+                          "type": "SPEC",
+                          "ref": "2.16.840.1.113883.3.1937.777.28.2.10120",
+                          "flexibility": "2018-10-31T00:00:00",
+                          "prefix": "prsb03-",
+                          "datasetId": "2.16.840.1.113883.3.1937.777.28.1.1",
+                          "datasetEffectiveDate": "2018-10-31T00:00:00",
+                          "datasetStatusCode": "draft",
+                          "datasetVersionLabel": "1",
+                          "iType": "item",
+                          "iStatusCode": "draft",
+                          "iEffectiveDate": "2018-10-31T00:00:00",
+                          "refdisplay": "prsb03-dataelement-10120",
+                          "name": [
+                            {
+                              "language": "en-GB",
+                              "content": "Comment"
+                            }
+                          ]
+                        }
+                      ],
+                      "operationalization": [
+                        {
+                          "language": "en-GB",
+                          "content": "Free text"
+                        }
+                      ],
+                      "valueDomain": [
+                        {
+                          "type": "text",
+                          "property": [
+                            {
+                              "maxLength": "150"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

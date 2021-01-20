@@ -17,20 +17,25 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+import groovy.json.JsonSlurper
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiUnauthorizedException
+import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.security.User
-import groovy.util.logging.Slf4j
+
+import java.nio.charset.Charset
 
 @Slf4j
-class ArtDecorDataModelImporterProviderService<T extends ArtDecorDataModelImporterProviderServiceParameters>
-    extends DataModelImporterProviderService<T> {
+class ArtDecorDataModelImporterProviderService extends DataModelImporterProviderService<ArtDecorDataModelImporterProviderServiceParameters> {
 
     @Autowired
-    DataModelService dataModelService 
+    DataModelService dataModelService
+    private User currentUser
 
     @Override
     String getDisplayName() {
@@ -48,16 +53,28 @@ class ArtDecorDataModelImporterProviderService<T extends ArtDecorDataModelImport
     }
 
     @Override
-    List<DataModel> importDataModels(User currentUser, T params) {
-        if (!currentUser) throw new ApiUnauthorizedException('ARTDECOR01', 'User must be logged in to import model')
-        log.debug("importDataModels")
+    List<DataModel> importDataModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
 
-        String namespace = "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor"
+        importDataModel(currentUser, params)?.first()
+        log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
     }
 
     @Override
-    DataModel importDataModel(User currentUser, T params) {
-        log.debug("importDataModel")
+    DataModel importDataModel(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
+        if (!currentUser) throw new ApiUnauthorizedException('EISP01', 'User must be logged in to import model')
+        this.currentUser = currentUser
+
+        FileParameter importFile = params.importFile
+        if (!importFile.fileContents.size()) throw new ApiBadRequestException('EIS02', 'Cannot import empty file')
+        log.info('Importing {} as {}', params.importFile.fileName, currentUser.emailAddress)
+        List<DataModel> imported = importDataModels(currentUser, params.importFile.fileContents)
+
+        log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
+    }
+
+    DataModel importDataModels(User currentUser, byte[] content) {
+        log.debug('Parsing in file content using JsonSlurper')
+        def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
     }
 
     @Override
@@ -65,7 +82,7 @@ class ArtDecorDataModelImporterProviderService<T extends ArtDecorDataModelImport
         true
     }    
 
-    DataModel updateImportedModelFromParameters(DataModel dataModel, T params, boolean list = false) {
+    DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
         if (params.finalised != null) dataModel.finalised = params.finalised
         if (!list && params.modelName) dataModel.label = params.modelName
         dataModel
