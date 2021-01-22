@@ -17,14 +17,18 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+import grails.web.databinding.DataBindingUtils
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
+import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiInternalException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiUnauthorizedException
+import uk.ac.ox.softeng.maurodatamapper.core.facet.Metadata
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.security.User
 
@@ -35,7 +39,6 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     @Autowired
     DataModelService dataModelService
-    private User currentUser
 
     @Override
     String getDisplayName() {
@@ -53,38 +56,77 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     @Override
-    List<DataModel> importDataModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
-
-        importDataModel(currentUser, params)?.first()
-        log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
+    DataModel importDataModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
+        return null
     }
 
     @Override
-    DataModel importDataModel(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
-        if (!currentUser) throw new ApiUnauthorizedException('EISP01', 'User must be logged in to import model')
-        this.currentUser = currentUser
-
+    List<DataModel> importDataModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
+        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
+        log.debug("importDataModels")
         FileParameter importFile = params.importFile
         if (!importFile.fileContents.size()) throw new ApiBadRequestException('EIS02', 'Cannot import empty file')
-        log.info('Importing {} as {}', params.importFile.fileName, currentUser.emailAddress)
-        List<DataModel> imported = importDataModels(currentUser, params.importFile.fileContents)
 
         log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
+
+        importModels currentUser, importFile.fileContents
     }
 
-    DataModel importDataModels(User currentUser, byte[] content) {
+    private List<DataModel> importModels(User currentUser, byte[] content) {
         log.debug('Parsing in file content using JsonSlurper')
         def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
-    }
+        def datamodelsMap = new HashMap();
+        def datasets = result.datasets
 
-    @Override
-    Boolean canImportMultipleDomains() {
-        true
-    }    
+        String namespace = "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor"
+
+        List<DataModel> imported = []
+        try {
+            datasets.each { dataset ->
+                log.debug("importDataModel ${dataset.shortName}")
+                DataModel dataModel = new DataModel(label: dataset.dataset.shortName)
+
+                //Add metadata
+
+                Metadata metadata = new Metadata(namespace: namespace, key: 'id', value: dataset.id)
+                dataModel.addToMetadata(metadata)
+
+                DataClass dataClass = new DataClass(label: dataset.dataset.type)
+                dataModel.addToDataClasses(dataClass)
+
+                dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
+                imported += dataModel
+            }
+        } catch (Exception ex) {
+            throw new ApiInternalException('ART02', "${ex.message}")
+        }
+    }
 
     DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
         if (params.finalised != null) dataModel.finalised = params.finalised
         if (!list && params.modelName) dataModel.label = params.modelName
         dataModel
-    }    
+    }
+
+    DataModel bindMapToDataModel(User currentUser, Map dataModelMap) {
+        if (!dataModelMap) throw new ApiBadRequestException('FBIP03', 'No DataModelMap supplied to import')
+
+        log.debug('Setting map dataClasses')
+        dataModelMap.dataClasses = dataModelMap.remove('childDataClasses')
+
+        DataModel dataModel = new DataModel(label: 'test')
+        log.debug('Binding map to new DataModel instance')
+        DataBindingUtils.bindObjectToInstance(dataModel, dataModelMap, null, ['id'], null)
+
+        log.debug('Fixing bound DataModel')
+   //     dataModelService.checkImportedDataModelAssociations(currentUser, dataModel, dataModelMap)
+
+        log.info('Import complete')
+        dataModel
+    }
+
+    @Override
+    Boolean canImportMultipleDomains() {
+        return null
+    }
 }

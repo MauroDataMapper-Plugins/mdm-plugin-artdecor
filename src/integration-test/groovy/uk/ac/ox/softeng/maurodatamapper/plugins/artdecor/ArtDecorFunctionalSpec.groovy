@@ -20,10 +20,13 @@ package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import grails.util.BuildSettings
+import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
 import spock.lang.Shared
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
 
+import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -59,6 +62,14 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
 
         then:
         verifyJsonResponse OK, new String(loadTestFile('expectedImporterParameters.json'))
+    }
+
+    void 'test artDecor dataModel'() {
+        when:
+        def result = new JsonSlurper().parseText(new String(loadTestFile('artdecor-test.json'), Charset.defaultCharset()))
+
+        then:
+        assert result.datasets.each {it.equals(new DataModel(label: 'name'))}
     }
 
 }
