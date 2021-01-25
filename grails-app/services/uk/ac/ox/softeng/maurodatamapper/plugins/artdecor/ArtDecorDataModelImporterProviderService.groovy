@@ -29,6 +29,7 @@ import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FilePar
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.security.User
 
@@ -69,10 +70,11 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
         log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
 
-        importModels currentUser, importFile.fileContents
+        importModels(currentUser, importFile.fileContents)
     }
 
     private List<DataModel> importModels(User currentUser, byte[] content) {
+        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
         log.debug('Parsing in file content using JsonSlurper')
         def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
         def datamodelsMap = new HashMap();
@@ -83,23 +85,71 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         List<DataModel> imported = []
         try {
             datasets.each { dataset ->
-                log.debug("importDataModel ${dataset.shortName}")
-                DataModel dataModel = new DataModel(label: dataset.dataset.shortName)
+                def datasetList = dataset.dataset
+                log.debug("importDataModel ${datasetList.shortName}")
+                DataModel dataModel = new DataModel(label: datasetList.shortName)
 
                 //Add metadata
 
-                Metadata metadata = new Metadata(namespace: namespace, key: 'id', value: dataset.id)
-                dataModel.addToMetadata(metadata)
+                datasetList.each { dataMap ->
+                    dataMap.each {
+                        Metadata metadata = new Metadata(namespace: namespace, key: it.key, value: it.value)
+                        dataModel.addToMetadata(metadata)
+                    }
+                }
 
-                DataClass dataClass = new DataClass(label: dataset.dataset.type)
+                DataClass dataClass = new DataClass(label: datasetList.type)
+                DataElement dataElement = new DataElement()
+                datasetList.each { dataMap ->
+                    def conceptList = dataMap.concept
+                    if (conceptList) {
+                        conceptList.each {
+                            if (it.type == 'group') {
+                                dataClass.label = it.shorName
+                                dataClass.description = it.desc.get(0).content
+                                dataClass.maxMultiplicity = it.maximumMultiplicity
+                            }
+
+                            def elementList = it.concept
+                            it.entrySet().collect { e ->
+                                if (e.key != 'concept'
+                                        && e.key != 'type'
+                                        && e.key != 'shortName'
+                                        && e.key != 'description'
+                                        && e.key != 'maxMultiplicity') {
+                                    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
+                                }
+
+                                if (e.key == 'concept') {
+                                    elementList.each {
+                                        if (it.type == 'item') {
+                                            dataElement.label = it.shorName
+                                            dataElement.description = it.desc.get(0).content
+                                            dataElement.maxMultiplicity = it.maximumMultiplicity
+                                        }
+                                        it.entrySet().collect { el ->
+                                            if (el.key != 'concept' && el.key != 'type' && el.key != 'shortName' && el.key != 'description' && el.key != 'maxMultiplicity') {
+                                                dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    dataClass.addToDataElements(dataElement)
+                }
                 dataModel.addToDataClasses(dataClass)
 
-                dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
+                   dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
                 imported += dataModel
+
             }
         } catch (Exception ex) {
             throw new ApiInternalException('ART02', "${ex.message}")
         }
+        imported
     }
 
     DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
@@ -119,7 +169,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         DataBindingUtils.bindObjectToInstance(dataModel, dataModelMap, null, ['id'], null)
 
         log.debug('Fixing bound DataModel')
-   //     dataModelService.checkImportedDataModelAssociations(currentUser, dataModel, dataModelMap)
+        //     dataModelService.checkImportedDataModelAssociations(currentUser, dataModel, dataModelMap)
 
         log.info('Import complete')
         dataModel

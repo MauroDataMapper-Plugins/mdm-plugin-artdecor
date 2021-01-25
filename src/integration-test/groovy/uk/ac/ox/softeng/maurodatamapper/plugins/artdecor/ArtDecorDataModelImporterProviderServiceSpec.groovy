@@ -6,16 +6,13 @@ import grails.util.BuildSettings
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Shared
-import spock.lang.Specification
 import uk.ac.ox.softeng.maurodatamapper.core.bootstrap.StandardEmailAddress
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
-import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.security.User
 import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
 import uk.ac.ox.softeng.maurodatamapper.test.unit.security.TestUser
 
-import javax.transaction.Transactional
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -64,7 +61,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         def dataModels = art.importDataModels(admin, parameters)
 
         then:
-        dataModels
+        assert(dataModels.get(0).label=='problem_list')
     }
 
     @Override
