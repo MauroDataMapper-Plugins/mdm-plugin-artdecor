@@ -4,7 +4,6 @@ import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import grails.util.BuildSettings
 import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Shared
 import uk.ac.ox.softeng.maurodatamapper.core.bootstrap.StandardEmailAddress
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
@@ -20,9 +19,6 @@ import java.nio.file.Paths
 @Slf4j
 @Integration
 class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
-
-    @Autowired
-    DataModelService dataModelService
 
     @Shared
     Path resourcesPath
@@ -49,19 +45,25 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
     }
 
     def "verify dataModel"() {
-        given:
+        DataModelService dataModelService = Mock()
         ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
         def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
         def fileParameter = new FileParameter()
         fileParameter.setFileContents(loadTestFile('artdecor-test.json'))
         parameters.importFile = fileParameter
 
+        given:
+        art.dataModelService = dataModelService
 
         when:
         def dataModels = art.importDataModels(admin, parameters)
 
         then:
+        1 * dataModelService._
         assert(dataModels.get(0).label=='problem_list')
+        assert(dataModels.get(0).dataClasses.description.get(0)=='This is a problem list record entry.  There may be 0 to many record entries under problem list.  Each record entry is made up of a number of elements or data items. ')
+        assert(dataModels.get(0).dataClasses.label.get(0)=='problem_list_record_entry')
+        assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==42)
     }
 
     @Override

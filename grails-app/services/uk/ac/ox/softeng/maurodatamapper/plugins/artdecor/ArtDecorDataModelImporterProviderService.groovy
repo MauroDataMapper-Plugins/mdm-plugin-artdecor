@@ -90,7 +90,6 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                 DataModel dataModel = new DataModel(label: datasetList.shortName)
 
                 //Add metadata
-
                 datasetList.each { dataMap ->
                     dataMap.each {
                         Metadata metadata = new Metadata(namespace: namespace, key: it.key, value: it.value)
@@ -105,7 +104,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                     if (conceptList) {
                         conceptList.each {
                             if (it.type == 'group') {
-                                dataClass.label = it.shorName
+                                dataClass.label = it.shortName
                                 dataClass.description = it.desc.get(0).content
                                 dataClass.maxMultiplicity = it.maximumMultiplicity
                             }
@@ -128,7 +127,11 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                             dataElement.maxMultiplicity = it.maximumMultiplicity
                                         }
                                         it.entrySet().collect { el ->
-                                            if (el.key != 'concept' && el.key != 'type' && el.key != 'shortName' && el.key != 'description' && el.key != 'maxMultiplicity') {
+                                            if (el.key != 'concept'
+                                                    && el.key != 'type'
+                                                    && el.key != 'shortName'
+                                                    && el.key != 'description'
+                                                    && el.key != 'maxMultiplicity') {
                                                 dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
                                             }
                                         }
@@ -137,12 +140,10 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                             }
                         }
                     }
-
                     dataClass.addToDataElements(dataElement)
                 }
                 dataModel.addToDataClasses(dataClass)
-
-                   dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
+                dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
                 imported += dataModel
 
             }
