@@ -31,6 +31,7 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.security.User
@@ -128,7 +129,8 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                 if (e.key == 'concept') {
                                     elementList.each {
                                         if (it.type == 'item') {
-                                            def itemDataType = new PrimitiveType(label: it.name.get(0).content)
+                                            DataType itemDataType = new PrimitiveType(label: it.name.get(0).content)
+                                            dataModel.addToDataTypes(itemDataType)
                                             dataElement.label = it.name.get(0).content
                                             dataElement.dataType = itemDataType
                                             dataElement.description = it.desc.get(0).content
