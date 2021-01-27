@@ -19,6 +19,7 @@ package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
 import grails.web.databinding.DataBindingUtils
 import groovy.json.JsonSlurper
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
@@ -30,6 +31,7 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.security.User
 
@@ -58,7 +60,8 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     @Override
     DataModel importDataModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
-        return null
+        log.debug("importDataModel")
+        importDataModels(user, t)?.first()
     }
 
     @Override
@@ -77,7 +80,6 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
         log.debug('Parsing in file content using JsonSlurper')
         def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
-        def datamodelsMap = new HashMap();
         def datasets = result.datasets
 
         String namespace = "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor"
@@ -86,16 +88,18 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         try {
             datasets.each { dataset ->
                 def datasetList = dataset.dataset
-                log.debug("importDataModel ${datasetList.shortName}")
-                DataModel dataModel = new DataModel(label: datasetList.shortName)
+                log.debug("importDataModel ${datasetList.name.get(0).content}")
+                DataModel dataModel = new DataModel(label: datasetList.name.get(0).content)
 
                 //Add metadata
+/*
                 datasetList.each { dataMap ->
                     dataMap.each {
                         Metadata metadata = new Metadata(namespace: namespace, key: it.key, value: it.value)
                         dataModel.addToMetadata(metadata)
                     }
                 }
+*/
 
                 DataClass dataClass = new DataClass(label: datasetList.type)
                 DataElement dataElement = new DataElement()
@@ -104,28 +108,33 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                     if (conceptList) {
                         conceptList.each {
                             if (it.type == 'group') {
-                                dataClass.label = it.shortName
+                                dataClass.label = it.name.get(0).content
                                 dataClass.description = it.desc.get(0).content
                                 dataClass.maxMultiplicity = it.maximumMultiplicity
                             }
 
                             def elementList = it.concept
+
                             it.entrySet().collect { e ->
-                                if (e.key != 'concept'
+ /*                               if (e.key != 'concept'
                                         && e.key != 'type'
                                         && e.key != 'shortName'
                                         && e.key != 'description'
                                         && e.key != 'maxMultiplicity') {
                                     dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
                                 }
+*/
 
                                 if (e.key == 'concept') {
                                     elementList.each {
                                         if (it.type == 'item') {
-                                            dataElement.label = it.shorName
+                                            def itemDataType = new PrimitiveType(label: it.name.get(0).content)
+                                            dataElement.label = it.name.get(0).content
+                                            dataElement.dataType = itemDataType
                                             dataElement.description = it.desc.get(0).content
                                             dataElement.maxMultiplicity = it.maximumMultiplicity
                                         }
+/*
                                         it.entrySet().collect { el ->
                                             if (el.key != 'concept'
                                                     && el.key != 'type'
@@ -135,6 +144,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                                 dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
                                             }
                                         }
+*/
                                     }
                                 }
                             }
