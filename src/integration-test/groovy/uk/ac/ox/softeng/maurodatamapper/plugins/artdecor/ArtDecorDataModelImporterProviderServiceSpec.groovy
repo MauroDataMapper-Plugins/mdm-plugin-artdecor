@@ -56,7 +56,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         art.dataModelService = dataModelService
 
         when:
-        def dataModels = art.importDataModels(admin, parameters)
+        def dataModels = art.importModels(admin, parameters)
 
         then:
         1 * dataModelService._

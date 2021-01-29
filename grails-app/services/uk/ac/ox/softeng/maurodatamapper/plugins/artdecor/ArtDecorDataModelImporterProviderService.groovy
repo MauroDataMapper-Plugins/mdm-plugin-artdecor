@@ -19,7 +19,6 @@ package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
 import grails.web.databinding.DataBindingUtils
 import groovy.json.JsonSlurper
-import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
@@ -60,13 +59,13 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     @Override
-    DataModel importDataModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
+    DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
         log.debug("importDataModel")
-        importDataModels(user, t)?.first()
+        importModels(user, t)?.first()
     }
 
     @Override
-    List<DataModel> importDataModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
+    List<DataModel> importModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
         if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
         log.debug("importDataModels")
         FileParameter importFile = params.importFile
@@ -74,10 +73,10 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
         log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
 
-        importModels(currentUser, importFile.fileContents)
+        importDataModels(currentUser, importFile.fileContents)
     }
 
-    private List<DataModel> importModels(User currentUser, byte[] content) {
+    private List<DataModel> importDataModels(User currentUser, byte[] content) {
         if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
         log.debug('Parsing in file content using JsonSlurper')
         def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
@@ -93,68 +92,77 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                 DataModel dataModel = new DataModel(label: datasetList.name.get(0).content)
 
                 //Add metadata
-/*
                 datasetList.each { dataMap ->
                     dataMap.each {
-                        Metadata metadata = new Metadata(namespace: namespace, key: it.key, value: it.value)
-                        dataModel.addToMetadata(metadata)
-                    }
-                }
-*/
 
-                DataClass dataClass = new DataClass(label: datasetList.type)
-                DataElement dataElement = new DataElement()
-                datasetList.each { dataMap ->
+                        if (it.key == 'shortName') {
+                       //     String value = it.value.replaceAll("_", " ")
+                       //     dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: value))
+                        } else {
+                          //  dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value))
+                        }
+                    }
+
                     def conceptList = dataMap.concept
+                    DataClass dataClass = new DataClass(label: datasetList.type)
                     if (conceptList) {
                         conceptList.each {
                             if (it.type == 'group') {
+
                                 dataClass.label = it.name.get(0).content
                                 dataClass.description = it.desc.get(0).content
                                 dataClass.maxMultiplicity = it.maximumMultiplicity
-                            }
 
-                            def elementList = it.concept
+                                def elementList = it.concept
 
-                            it.entrySet().collect { e ->
- /*                               if (e.key != 'concept'
-                                        && e.key != 'type'
-                                        && e.key != 'shortName'
-                                        && e.key != 'description'
-                                        && e.key != 'maxMultiplicity') {
-                                    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
-                                }
-*/
-
-                                if (e.key == 'concept') {
-                                    elementList.each {
-                                        if (it.type == 'item') {
-                                            DataType itemDataType = new PrimitiveType(label: it.name.get(0).content)
-                                            dataModel.addToDataTypes(itemDataType)
-                                            dataElement.label = it.name.get(0).content
-                                            dataElement.dataType = itemDataType
-                                            dataElement.description = it.desc.get(0).content
-                                            dataElement.maxMultiplicity = it.maximumMultiplicity
-                                        }
-/*
-                                        it.entrySet().collect { el ->
-                                            if (el.key != 'concept'
-                                                    && el.key != 'type'
-                                                    && el.key != 'shortName'
-                                                    && el.key != 'description'
-                                                    && el.key != 'maxMultiplicity') {
-                                                dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
-                                            }
-                                        }
-*/
+                                it.entrySet().collect { e ->
+                                    if (e.key == 'shortName') {
+                                    //    String value = e.value.replaceAll("_", " ")
+                                    //    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: value))
+                                    } else if (e.key != "shortName"
+                                            && e.key != 'concept'
+                                            && e.key != 'type'
+                                            && e.key != 'description'
+                                            && e.key != 'maxMultiplicity'){
+                                     //   dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
                                     }
+                                    if (e.key == 'concept') {
+
+                                        elementList.each {
+                                            if (it.type == 'item') {
+                                                DataElement dataElement = new DataElement()
+                                                DataType itemDataType = new PrimitiveType(label: it.name.get(0).content)
+                                                dataModel.addToDataTypes(itemDataType)
+                                                dataElement.label = it.name.get(0).content
+                                                dataElement.dataType = itemDataType
+                                                dataElement.description = it.desc.get(0).content
+                                                dataElement.maxMultiplicity = it.maximumMultiplicity
+
+                                                it.entrySet().collect { el ->
+                                                    if (el.key == 'shortName') {
+                                                   //     String value = el.value.replaceAll("_", " ")
+                                                   //     dataClass.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: value))
+                                                    } else if (e.key != 'shortName'
+                                                            && e.key != 'concept'
+                                                            && el.key != 'type'
+                                                            && el.key != 'description'
+                                                            && el.key != 'maxMultiplicity'){
+                                                //        dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
+                                                    }
+                                                }
+                                                dataClass.addToDataElements(dataElement)
+                                            }
+
+                                        }
+
+                                    }
+
                                 }
+                                dataModel.addToDataClasses(dataClass)
                             }
                         }
                     }
-                    dataClass.addToDataElements(dataElement)
                 }
-                dataModel.addToDataClasses(dataClass)
                 dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
                 imported += dataModel
 
