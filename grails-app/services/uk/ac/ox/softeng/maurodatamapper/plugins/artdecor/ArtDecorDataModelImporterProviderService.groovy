@@ -94,12 +94,10 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                 //Add metadata
                 datasetList.each { dataMap ->
                     dataMap.each {
-
-                        if (it.key == 'shortName') {
-                       //     String value = it.value.replaceAll("_", " ")
-                       //     dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: value))
-                        } else {
-                          //  dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value))
+                        if (it.key != 'concept'
+                                && it.key != 'desc'
+                                && it.key != 'name') {
+                            dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value))
                         }
                     }
 
@@ -116,15 +114,14 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                 def elementList = it.concept
 
                                 it.entrySet().collect { e ->
-                                    if (e.key == 'shortName') {
-                                    //    String value = e.value.replaceAll("_", " ")
-                                    //    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: value))
-                                    } else if (e.key != "shortName"
+                                    if (e.key != 'implementation'
                                             && e.key != 'concept'
-                                            && e.key != 'type'
-                                            && e.key != 'description'
-                                            && e.key != 'maxMultiplicity'){
-                                     //   dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
+                                            && e.key != 'desc'
+                                            && e.key != 'relationship'
+                                            && e.key != 'name'
+                                            && e.key != 'operationalization'
+                                            && e.key != 'valueDomain'){
+                                        dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
                                     }
                                     if (e.key == 'concept') {
 
@@ -132,22 +129,21 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                             if (it.type == 'item') {
                                                 DataElement dataElement = new DataElement()
                                                 DataType itemDataType = new PrimitiveType(label: it.name.get(0).content)
-                                                dataModel.addToDataTypes(itemDataType)
+                                            //    dataModel.addToDataTypes(itemDataType)
                                                 dataElement.label = it.name.get(0).content
                                                 dataElement.dataType = itemDataType
                                                 dataElement.description = it.desc.get(0).content
                                                 dataElement.maxMultiplicity = it.maximumMultiplicity
 
                                                 it.entrySet().collect { el ->
-                                                    if (el.key == 'shortName') {
-                                                   //     String value = el.value.replaceAll("_", " ")
-                                                   //     dataClass.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: value))
-                                                    } else if (e.key != 'shortName'
-                                                            && e.key != 'concept'
-                                                            && el.key != 'type'
-                                                            && el.key != 'description'
-                                                            && el.key != 'maxMultiplicity'){
-                                                //        dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
+                                                    if (el.key != 'implementation'
+                                                            && el.key != 'concept'
+                                                            && el.key != 'desc'
+                                                            && el.key != 'relationship'
+                                                            && el.key != 'name'
+                                                            && el.key != 'operationalization'
+                                                            && el.key != 'valueDomain'){
+                                                        dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
                                                     }
                                                 }
                                                 dataClass.addToDataElements(dataElement)

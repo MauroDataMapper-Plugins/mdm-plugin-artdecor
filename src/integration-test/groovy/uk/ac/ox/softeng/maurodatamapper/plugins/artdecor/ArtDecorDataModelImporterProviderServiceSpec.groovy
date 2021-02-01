@@ -49,7 +49,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
         def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
         def fileParameter = new FileParameter()
-        fileParameter.setFileContents(loadTestFile('artdecor-test.json'))
+        fileParameter.setFileContents(loadTestFile('artdecor-test-multiple-concepts.json'))
         parameters.importFile = fileParameter
 
         given:
