@@ -53,7 +53,7 @@ pipeline {
             }
         }
 
-        stage('Functional Test') {
+        stage('Integration Test') {
 
             steps {
                 sh "./grailsw test-app -integration"
