@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 University of Oxford
+ * Copyright 2020 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.config.ImportGroupConfig
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.config.ImportParameterConfig
-import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.parameter.DataModelFileImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.parameter.DataModelImporterProviderServiceParameters
 
 class ArtDecorDataModelImporterProviderServiceParameters extends DataModelImporterProviderServiceParameters {

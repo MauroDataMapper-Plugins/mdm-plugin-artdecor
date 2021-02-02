@@ -53,8 +53,6 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.spockframework:spock-core'
-    implementation 'org.spockframework:spock-core'
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
@@ -142,25 +140,10 @@ grailsPublish {
 grails {
     plugins {
         compile group: 'uk.ac.ox.softeng.maurodatamapper', name: 'mdm-core', version: mdmCoreVersion
-        compile group: 'uk.ac.ox.softeng.maurodatamapper', name: 'mdm-plugin-datamodel', version: mdmPluginDataModelVersion
-        compile group: 'uk.ac.ox.softeng.maurodatamapper.plugins', name: 'mdm-plugin-profile', version: mdmPluginProfileVersion
+        compile group: 'uk.ac.ox.softeng.maurodatamapper', name: 'mdm-plugin-datamodel', version: mdmCoreVersion
     }
 }
 
 apply from: 'dependencies.gradle'
-apply from: "${rootDir}/gradle/additions/grails.gradle"
-
-license {
-    header = file("${rootDir}/NOTICE")
-    excludes([
-            '**/*.gson',
-            '**/*.yml',
-            '**/META-INF/**',
-            '**/*.txt',
-            '**/*.json',
-            '**/*.gml',
-            '**/*.jpeg',
-            '**/*.png',
-            '**/*.xml'
-    ])
-}
+apply from: "${projectDir}/gradle/additions/mdm.gradle"
+apply from: "${projectDir}/gradle/additions/grails.gradle"
