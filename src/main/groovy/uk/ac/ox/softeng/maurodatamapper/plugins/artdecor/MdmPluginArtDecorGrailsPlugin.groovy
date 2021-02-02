@@ -28,7 +28,7 @@ class MdmPluginArtDecorGrailsPlugin extends Plugin {
             "grails-app/views/error.gsp"
     ]
 
-    def title = "Mauro Data Mapper AWS Glue Profile Plugin"
+    def title = "Mauro Data Mapper Artdecor Profile Plugin"
     // Headline display name of the plugin
     def author = "Ikenna Ibeanu"
     def authorEmail = "ikenna.ibeanu@ibctec.co.uk"
@@ -59,7 +59,6 @@ The Art Decor importer services and controllers for the Mauro Data Mapper backen
     def dependsOn = [
             mdmCore           : '4.0.0 > *',
             mdmPluginDatamodel: '4.0.0 > *',
-            mdmPluginProfile  : '1.0.0 > *',
     ]
 
     Closure doWithSpring() {

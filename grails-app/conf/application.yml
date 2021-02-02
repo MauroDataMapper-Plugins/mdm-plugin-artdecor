@@ -18,7 +18,7 @@ maurodatamapper:
 grails:
     profile: rest-api-plugin
     codegen:
-        defaultPackage: uk.ac.ox.softeng.maurodatamapper.plugins.profile.schema.org
+        defaultPackage: uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -136,7 +136,7 @@ hibernate:
             provider: org.ehcache.jsr107.EhcacheCachingProvider
             missing_cache_strategy: create
     search:
-        default.indexBase: '/tmp/lucene/plugin/profile/schema/org'
+        default.indexBase: '/tmp/lucene/plugin/artdecor'
 
 ---
 dataSource:
@@ -148,7 +148,7 @@ environments:
     test:
         spring.flyway.enabled: false
         database:
-            name: 'mpp'
+            name: 'mpa'
             creation: 'CREATE SCHEMA IF NOT EXISTS CORE\;CREATE SCHEMA IF NOT EXISTS DATAMODEL\;CREATE SCHEMA IF NOT EXISTS TERMINOLOGY'
         dataSource:
             driverClassName: org.h2.Driver
