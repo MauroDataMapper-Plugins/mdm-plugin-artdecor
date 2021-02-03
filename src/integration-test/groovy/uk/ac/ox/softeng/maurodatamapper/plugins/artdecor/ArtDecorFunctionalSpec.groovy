@@ -69,7 +69,7 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
         def result = new JsonSlurper().parseText(new String(loadTestFile('artdecor-test.json'), Charset.defaultCharset()))
 
         then:
-        assert result.datasets.each {it.equals(new DataModel(label: 'name'))}
+        assert result.datasets.each { (it == new DataModel(label: 'name')) }
     }
 
 }

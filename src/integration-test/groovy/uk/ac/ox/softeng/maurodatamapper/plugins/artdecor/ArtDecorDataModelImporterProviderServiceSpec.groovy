@@ -77,10 +77,10 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
 
         then:
         1 * dataModelService._
-        assert(dataModels.get(0).label=='Problem list')
-        assert(dataModels.get(0).dataClasses.description.get(0)=='This is a problem list record entry.  There may be 0 to many record entries under problem list.  Each record entry is made up of a number of elements or data items. ')
-        assert(dataModels.get(0).dataClasses.label.get(0)=='Problem list record entry')
-        assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==42)
+        assert(dataModels.get(0).label=='Core information standard')
+        assert(dataModels.get(0).dataClasses.description.get(0)=='Details about documents related to the person. &#160;')
+        assert(dataModels.get(0).dataClasses.label.get(0)=='Documents (including correspondence and images)')
+        assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==49)
     }
 
     @Override
