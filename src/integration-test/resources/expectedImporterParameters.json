@@ -1,0 +1,105 @@
+{
+  "importer": {
+    "allowsExtraMetadataKeys": true,
+    "canImportMultipleDomains": null,
+    "displayName": "Art Decor Importer",
+    "knownMetadataKeys": [],
+    "name": "ArtDecorDataModelImporterProviderService",
+    "namespace": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor",
+    "paramClassType": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.ArtDecorDataModelImporterProviderServiceParameters",
+    "providerType": "DataModelImporter",
+    "version": "2.1.0-SNAPSHOT"
+  },
+  "parameterGroups": [
+    {
+      "name": "Model",
+      "parameters": [
+        {
+          "name": "folderId",
+          "type": "Folder",
+          "optional": false,
+          "displayName": "Folder",
+          "description": "The folder into which the Model/s should be imported."
+        },
+        {
+          "name": "modelName",
+          "type": "String",
+          "optional": true,
+          "displayName": "Model name",
+          "description": "Label of Model, this will override any existing name provided in the imported data. Note that if importing multiple models this will be ignored."
+        },
+        {
+          "name": "importAsNewBranchModelVersion",
+          "type": "Boolean",
+          "optional": false,
+          "displayName": "Import as New Branch Model Version",
+          "description": "Should the Model/s be imported as new Branch Version/s. If selected then the latest finalised model with the same name will be chosen as the base. If not selected then the 'Model Name' field should be used to ensure the imported Model is uniquely named, otherwise you could get an error."
+        },
+        {
+          "name": "importAsNewDocumentationVersion",
+          "type": "Boolean",
+          "optional": false,
+          "displayName": "Import as New Documentation Version",
+          "description": "Should the Model/s be imported as new Documentation Version/s. If selected then any models with the same name will be superseded and the imported models will be given the latest documentation version of the existing Models. If not selected then the 'Model Name' field should be used to ensure the imported Model is uniquely named, otherwise you could get an error."
+        },
+        {
+          "name": "finalised",
+          "type": "Boolean",
+          "optional": false,
+          "displayName": "Finalised",
+          "description": "Whether the new model is to be marked as finalised. Note that if the model is already finalised this will not be overridden."
+        }
+      ]
+    },
+    {
+      "name": "Model Branching",
+      "parameters": [
+        {
+          "name": "newBranchName",
+          "type": "String",
+          "optional": true,
+          "displayName": "New Branch Name",
+          "description": "Name for the branch if importing as new branch model version. Default if not provided is \"main\". Each branch from a finalised model must have a unique name. If the branch name already exists then the model will not be imported."
+        }
+      ]
+    },
+    {
+      "name": "Source",
+      "parameters": [
+        {
+          "name": "importFile",
+          "type": "File",
+          "optional": false,
+          "displayName": "File",
+          "description": "The file containing the data to be imported"
+        }
+      ]
+    },
+    {
+      "name": "Model Information",
+      "parameters": [
+        {
+          "name": "organisation",
+          "type": "String",
+          "optional": true,
+          "displayName": "Organisation",
+          "description": "The organisation which created the Model"
+        },
+        {
+          "name": "author",
+          "type": "String",
+          "optional": true,
+          "displayName": "Author",
+          "description": "The author of the file, can be the same as the organisation"
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "optional": true,
+          "displayName": "Model Description",
+          "description": "The description of the Model being imported"
+        }
+      ]
+    }
+  ]
+}

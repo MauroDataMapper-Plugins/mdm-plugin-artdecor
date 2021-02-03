@@ -17,21 +17,23 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.config.ImportGroupConfig
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.config.ImportParameterConfig
+import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.parameter.DataModelFileImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.parameter.DataModelImporterProviderServiceParameters
 
 class ArtDecorDataModelImporterProviderServiceParameters extends DataModelImporterProviderServiceParameters {
+
     @ImportParameterConfig(
-            displayName = 'Name',
-            description = 'Test',
-            optional = true,
+            displayName = 'File',
+            description = 'The file containing the data to be imported',
             order = -1,
             group = @ImportGroupConfig(
-                    name = 'Art Decor param',
+                    name = 'Source',
                     order = 1
             )
     )
-    String name
+    FileParameter importFile
 
 }
