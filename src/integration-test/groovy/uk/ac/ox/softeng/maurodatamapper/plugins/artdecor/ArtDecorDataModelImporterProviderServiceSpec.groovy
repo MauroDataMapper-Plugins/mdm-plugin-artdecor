@@ -77,10 +77,17 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
 
         then:
         1 * dataModelService._
+        //dataModel
         assert(dataModels.get(0).label=='Core information standard')
+        //dataClasses
         assert(dataModels.get(0).dataClasses.description.get(0)=='Details about documents related to the person. &#160;')
         assert(dataModels.get(0).dataClasses.label.get(0)=='Documents (including correspondence and images)')
         assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==49)
+        assert(dataModels.get(0).dataClasses.metadata.get(0).size()==15)
+        //dataElements
+        assert(dataModels.get(0).dataClasses.dataElements.get(0).size()==32)
+        assert(dataModels.get(0).dataClasses.dataElements.get(0).label.get(0)=='Date of birth')
+        assert(dataModels.get(0).dataClasses.dataElements.get(0).dataType.label.get(0)=='Date of birth')
     }
 
     @Override
