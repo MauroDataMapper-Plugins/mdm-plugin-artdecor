@@ -29,6 +29,7 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
+
 import uk.ac.ox.softeng.maurodatamapper.security.User
 
 import groovy.json.JsonSlurper
@@ -97,7 +98,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                         if (it.key != 'concept'
                                 && it.key != 'desc'
                                 && it.key != 'name') {
-                            dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value))
+                            dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value.toString()))
                         }
                     }
                     Set<String> labels = new HashSet<>()
@@ -114,9 +115,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                 def elementList = it.concept
 
                                 it.entrySet().collect { e ->
-                                    if (notExcludedProperties(e.key)){
-                                        dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
-                                    }
+                                    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
                                     if (e.key == 'concept') {
 
                                         elementList.each {
@@ -129,11 +128,9 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                                 dataElement.maxMultiplicity = it.maximumMultiplicity
 
                                                 it.entrySet().collect { el ->
-                                                    if (notExcludedProperties(el.key)){
-                                                        dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
-                                                    }
+                                                    dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
                                                 }
-                                                if ( !labels.contains(uniqueName)) {
+                                                if (!labels.contains(uniqueName)) {
                                                     itemDataType.label = uniqueName
                                                     dataModel.addToDataTypes(itemDataType)
                                                     dataElement.label = uniqueName
@@ -160,21 +157,6 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
             throw new ApiInternalException('ART02', "${ex.message}")
         }
         imported
-    }
-
-    private boolean notExcludedProperties(String key) {
-        return (key != 'implementation' && key != 'concept'
-                && key != 'context'
-                && key != 'comment'
-                && key != 'source'
-                && key != 'rationale'
-                && key != 'property'
-                && key != 'valueSet'
-                && key != 'desc'
-                && key != 'relationship'
-                && key != 'name'
-                && key != 'operationalization'
-                && key != 'valueDomain')
     }
 
     DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
