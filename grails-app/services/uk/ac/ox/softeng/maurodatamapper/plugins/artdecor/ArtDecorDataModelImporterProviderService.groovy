@@ -17,6 +17,9 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+import groovy.json.JsonSlurper
+import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiInternalException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiUnauthorizedException
@@ -29,12 +32,7 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
-
 import uk.ac.ox.softeng.maurodatamapper.security.User
-
-import groovy.json.JsonSlurper
-import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 
 import java.nio.charset.Charset
 
@@ -82,79 +80,88 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         log.debug('Parsing in file content using JsonSlurper')
         def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
         def datasets = result.datasets
+        def dataset = result.dataset
 
         String namespace = "org.artdecor"
 
         List<DataModel> imported = []
         try {
-            datasets.each { dataset ->
-                def datasetList = dataset.dataset
-                log.debug("importDataModel ${datasetList.name.get(0).content}")
-                DataModel dataModel = new DataModel(label: datasetList.name.get(0).content)
+            if (datasets) {
+                imported = processMultiDatasets(currentUser, datasets, namespace, imported)
+            } else if (dataset) {
+                imported = processSingleDataset(currentUser, dataset, namespace, imported)
+            }
+        } catch (Exception ex) {
+            throw new ApiInternalException('ART02', "${ex.message}")
+        }
+        imported
+    }
 
-                //Add metadata
-                datasetList.each { dataMap ->
-                    dataMap.each {
-                        if (it.key != 'concept'
-                                && it.key != 'desc'
-                                && it.key != 'name') {
-                            dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value.toString()))
-                        }
+    private List<DataModel> processMultiDatasets(User currentUser, datasets, String namespace, List<DataModel> imported) {
+        datasets.each { dataset ->
+            def datasetList = dataset.dataset
+            log.debug("importDataModel ${datasetList.name.get(0).content}")
+            DataModel dataModel = new DataModel(label: datasetList.name.get(0).content)
+
+            //Add metadata
+            datasetList.each { dataMap ->
+                dataMap.each {
+                    if (it.key != 'concept'
+                            && it.key != 'desc'
+                            && it.key != 'name') {
+                        dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value.toString()))
                     }
-                    Set<String> labels = new HashSet<>()
-                    def conceptList = dataMap.concept
-                    DataClass dataClass = new DataClass(label: datasetList.type)
-                    if (conceptList) {
-                        conceptList.each {
-                            if (it.type == 'group') {
+                }
+                Set<String> labels = new HashSet<>()
+                def conceptList = dataMap.concept
+                DataClass dataClass = new DataClass(label: datasetList.type)
+                if (conceptList) {
+                    conceptList.each {
+                        if (it.type == 'group') {
 
-                                dataClass.label = it.name.get(0).content
-                                dataClass.description = it.desc.get(0).content
-                                dataClass.maxMultiplicity = it.maximumMultiplicity
+                            dataClass.label = it.name.get(0).content
+                            dataClass.description = it.desc.get(0).content
+                            dataClass.maxMultiplicity = it.maximumMultiplicity
 
-                                def elementList = it.concept
+                            def elementList = it.concept
 
-                                it.entrySet().collect { e ->
-                                    dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
-                                    if (e.key == 'concept') {
+                            it.entrySet().collect { e ->
+                                dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
+                                if (e.key == 'concept') {
 
-                                        elementList.each {
-                                            if (it.type == 'item') {
-                                                DataElement dataElement = new DataElement()
-                                                DataType itemDataType = new PrimitiveType()
-                                                String uniqueName = it.name.get(0).content
-                                                dataElement.dataType = itemDataType
-                                                dataElement.description = it.desc.get(0).content
-                                                dataElement.maxMultiplicity = it.maximumMultiplicity
+                                    elementList.each {
+                                        if (it.type == 'item') {
+                                            DataElement dataElement = new DataElement()
+                                            DataType itemDataType = new PrimitiveType()
+                                            String uniqueName = it.name.get(0).content
+                                            dataElement.dataType = itemDataType
+                                            dataElement.description = it.desc.get(0).content
+                                            dataElement.maxMultiplicity = it.maximumMultiplicity
 
-                                                it.entrySet().collect { el ->
-                                                    dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
-                                                }
-                                                if (!labels.contains(uniqueName)) {
-                                                    itemDataType.label = uniqueName
-                                                    dataModel.addToDataTypes(itemDataType)
-                                                    dataElement.label = uniqueName
-                                                    dataClass.addToDataElements(dataElement)
-                                                    labels.add(uniqueName)
-                                                }
-
+                                            it.entrySet().collect { el ->
+                                                dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
+                                            }
+                                            if (!labels.contains(uniqueName)) {
+                                                itemDataType.label = uniqueName
+                                                dataModel.addToDataTypes(itemDataType)
+                                                dataElement.label = uniqueName
+                                                dataClass.addToDataElements(dataElement)
+                                                labels.add(uniqueName)
                                             }
 
                                         }
 
                                     }
+
                                 }
-                                dataModel.addToDataClasses(dataClass)
                             }
+                            dataModel.addToDataClasses(dataClass)
                         }
                     }
                 }
-                dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
-                imported += dataModel
-
             }
-        } catch (Exception ex) {
-            throw new ApiInternalException('ART02', "${ex.message}")
+            dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
+            imported += dataModel
         }
         imported
     }
@@ -168,5 +175,92 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     @Override
     Boolean canImportMultipleDomains() {
         return null
+    }
+
+    List<DataModel> processSingleDataset(User currentUser, dataset, String namespace, List<DataModel> imported) {
+        log.debug("importDataModel ${dataset.name.get(0).content}")
+        DataModel dataModel = new DataModel(label: dataset.name.get(0).get(0).get("#text"))
+        Set<String> labels = new HashSet<>()
+        dataset.each { dataMap ->
+            dataMap.each {
+                if (it.key != 'concept'
+                        && it.key != 'desc'
+                        && it.key != 'name') {
+                    dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value.toString()))
+                }
+            }
+            List<Map<String, Object>> conceptList = dataMap.concept
+            if (conceptList) {
+                DataClass dataClass = new DataClass(label: dataset.type)
+                conceptList.each { concept ->
+                    if ( concept.type == 'group') {
+                        processDataClass(concept as Map<String, Object>, dataModel, namespace, labels)
+                    } else {
+                        processElements(concept as Map<String, Object>, dataClass, namespace, dataModel, labels)
+                        dataModel.addToDataClasses(dataClass)
+                    }
+                }
+
+            }
+            dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
+            imported += dataModel
+
+        }
+        imported
+    }
+    private void processDataClass(Map<String,Object> it, DataModel dataModel, String namespace, Set<String> labels) {
+        DataClass dataClass = new DataClass(label: it.type)
+        String uniqueName = ((Map) ((List) it.name).get(0)).get("#text")
+        if (!labels.contains(uniqueName)) {
+            dataClass.label = ((Map) ((List) it.name).get(0)).get("#text")
+            dataClass.description = ((Map) ((List)it.desc).get(0)).get("#text")
+            dataClass.maxMultiplicity = Integer.valueOf(it.maximumMultiplicity)
+            processElements(it, dataClass, namespace, dataModel, labels)
+            processMetadata(it, null, dataClass)
+            dataModel.addToDataClasses(dataClass)
+        }
+
+    }
+
+    private void processElements(Map<String, Object> it, dataClass, String namespace, dataModel, Set<String> labels) {
+        List<Map<String, Object>> elementList = it.concept
+        it.entrySet().collect { e ->
+            dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
+            if (e.key == 'concept') {
+                elementList.each {
+                    if (it.type == 'item') {
+                        DataElement dataElement = new DataElement()
+                        DataType itemDataType = new PrimitiveType()
+                        String uniqueName = ((Map) ((List) it.name).get(0)).get("#text")
+                        dataElement.dataType = itemDataType
+                        dataElement.description = ((Map) ((List)it.desc).get(0)).get("#text")
+                        dataElement.maxMultiplicity = Integer.valueOf(it.maximumMultiplicity != "*" ? it.maximumMultiplicity : "100")
+
+                        processMetadata(it, dataElement, null)
+                        if (!labels.contains(uniqueName)) {
+                            itemDataType.label = uniqueName
+                            dataModel.addToDataTypes(itemDataType)
+                            dataElement.label = uniqueName
+                            dataClass.addToDataElements(dataElement)
+                            labels.add(uniqueName)
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    private void processMetadata(Map<String, Object> it, DataElement element, DataClass dataClass) {
+        String namespace = "org.artdecor"
+        it.entrySet().collect { el ->
+            if (element) {
+                element.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
+            } else {
+                dataClass.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
+            }
+        }
     }
 }

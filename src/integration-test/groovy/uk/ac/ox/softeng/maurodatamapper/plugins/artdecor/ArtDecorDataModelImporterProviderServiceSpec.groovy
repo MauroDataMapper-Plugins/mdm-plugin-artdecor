@@ -90,6 +90,27 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         assert(dataModels.get(0).dataClasses.dataElements.get(0).dataType.label.get(0)=='Date of birth')
     }
 
+    def "verify single dataset dataModel"() {
+        DataModelService dataModelService = Mock()
+        ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
+        def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
+        def fileParameter = new FileParameter()
+        fileParameter.setFileContents(loadTestFile('artDecor-payload-2.json'))
+        parameters.importFile = fileParameter
+
+        given:
+        art.dataModelService = dataModelService
+
+        when:
+        def dataModels = art.importModels(admin, parameters)
+
+        then:
+        1 * dataModelService._
+        //dataModel
+        assert(dataModels.get(0).label=='About me')
+    }
+
+
     @Override
     String getResourcePath() {
         ''

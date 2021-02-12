@@ -1,0 +1,477 @@
+{
+    "dataset": [
+        {
+            "id": "2.16.840.1.113883.3.1937.777.28.1.1",
+            "effectiveDate": "2018-10-31T00:00:00",
+            "statusCode": "draft",
+            "versionLabel": "1",
+            "prefix": "prsb03-",
+            "transactionId": "2.16.840.1.113883.3.1937.777.28.4.142",
+            "transactionEffectiveDate": "2020-04-28T12:49:07",
+            "transactionStatusCode": "final",
+            "transactionVersionLabel": "1",
+            "transactionType": "stationary",
+            "transactionIddisplay": "prsb03-transaction-142",
+            "shortName": "about_me",
+            "iddisplay": "prsb03-dataset-1",
+            "name": [
+                {
+                    "language": "en-GB",
+                    "#text": "About me "
+                }
+            ],
+            "desc": [
+                {
+                    "language": "en-GB"
+                }
+            ],
+            "concept": [
+                {
+                    "id": "2.16.840.1.113883.3.1937.777.28.2.466",
+                    "effectiveDate": "2018-10-31T00:00:00",
+                    "statusCode": "draft",
+                    "type": "group",
+                    "minimumMultiplicity": "0",
+                    "maximumMultiplicity": "1",
+                    "conformance": "R",
+                    "isMandatory": "false",
+                    "iddisplay": "prsb03-dataelement-466",
+                    "shortName": "about_me",
+                    "implementation": [
+                        {
+                            "shortName": "about_me"
+                        }
+                    ],
+                    "name": [
+                        {
+                            "language": "en-GB",
+                            "#text": "About me "
+                        }
+                    ],
+                    "desc": [
+                        {
+                            "language": "en-GB",
+                            "#text": "About me "
+                        }
+                    ],
+                    "concept": [
+                        {
+                            "id": "2.16.840.1.113883.3.1937.777.28.2.10366",
+                            "effectiveDate": "2018-10-31T00:00:00",
+                            "statusCode": "draft",
+                            "type": "group",
+                            "minimumMultiplicity": "0",
+                            "maximumMultiplicity": "*",
+                            "conformance": "R",
+                            "isMandatory": "false",
+                            "iddisplay": "prsb03-dataelement-10366",
+                            "shortName": "about_me",
+                            "implementation": [
+                                {
+                                    "shortName": "about_me"
+                                }
+                            ],
+                            "name": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "About me "
+                                }
+                            ],
+                            "desc": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "This is a record of the things that a person feels it is important to communicate about their needs, strengths, values, concerns and preferences to others providing support and care."
+                                }
+                            ],
+                            "operationalization": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "&lt;br clear=\"none\"/&gt;\n&lt;br clear=\"none\"/&gt;\n&lt;br clear=\"none\"/&gt;\n&lt;br clear=\"none\"/&gt;\n&lt;br clear=\"none\"/&gt;\n&lt;br clear=\"none\"/&gt;"
+                                }
+                            ],
+                            "concept": [
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.12964",
+                                    "effectiveDate": "2020-03-30T10:50:29",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.3",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-12964",
+                                    "shortName": "what_is_most_important_to_me",
+                                    "implementation": [
+                                        {
+                                            "shortName": "what_is_most_important_to_me"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "What is most important to me"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:7.35pt\"/&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:7.35pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;A description\nof what is most important to you&lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;b&gt;Emergency Information&lt;/b&gt;\n    &lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Include any &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"mso-fareast-font-family:&amp;#34;Times New Roman&amp;#34;\"&gt;essential\ninformation that any professional in health and social care should know about\nthe you in any situation, including emergencies. &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:.05pt;tab-stops:12.9pt\"&gt;\n    &lt;b&gt;Other Information&lt;/b&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt;margin-right:0cm;margin-bottom: 0cm;margin-left:0cm;margin-bottom:.0001pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-spacerun:yes\"&gt;&amp;#160; &lt;/span&gt;This could\ninclude:&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 0.05pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Values&lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.45pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Spirituality/religion&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.45pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Ethnicity&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.45pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Culture&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.45pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Pets&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.4pt 0cm 0.0001pt 12.85pt;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Goals and aspirations&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin: 2.4pt 30.55pt 0.0001pt 12pt; line-height: 117%;\"&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;\n        &lt;span style=\"mso-list:Ignore\"&gt;•&lt;span style=\"font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal;\"&gt;&amp;#160;\n&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;Meaningful activities including\nleisure activities, visiting places, sport and\nexercise, listening to music, employment, education, volunteering&lt;span style=\"font-size: 11.5pt;\"/&gt;\n    &lt;/span&gt;\n&lt;/p&gt;\n&lt;span class=\"yui-non\" tag=\"span\"&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/span&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13009",
+                                    "effectiveDate": "2020-04-27T11:23:17",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.3",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13009",
+                                    "shortName": "people_who_are_important_to_me",
+                                    "implementation": [
+                                        {
+                                            "shortName": "people_who_are_important_to_me"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "People who are important to me"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"TableParagraph\" style=\"margin-top:7.35pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;Details of who is important to you and why. They could be family\nmembers, carers, friends, &lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;members of staff etc&lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;.&lt;/span&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt;line-height:117%\"&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;Include how you want the people important to you to be engaged and\ninvolved in your care and support in both emergency and normal situations.&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:7.35pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Who should not be\ncontacted or consulted about your care and support and why, if\nyou wish to say&lt;/span&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13006",
+                                    "effectiveDate": "2020-04-24T11:48:24",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.3",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13006",
+                                    "shortName": "how_i_communicate_and_how_to_communicate_with_me",
+                                    "implementation": [
+                                        {
+                                            "shortName": "how_i_communicate_and_how_to_communicate_with_me"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "How I communicate and how to communicate with me"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt;margin-right:16.15pt; margin-bottom:0cm;margin-left:5.65pt;margin-bottom:.0001pt;line-height:117%\"&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;A description of how\nyou communicate normally including any communication aids you use, for example\na hearing aid.&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:.2pt;margin-right:0cm;margin-bottom: 0cm;margin-left:0cm;margin-bottom:.0001pt\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;&amp;#160;&lt;br clear=\"none\"/&gt;\n    &lt;/span&gt;\n&lt;/p&gt;\n&lt;ul&gt;\n    &lt;li&gt;Include your preferred\nlanguage of communication, if your first language is not English.&lt;/li&gt;\n    &lt;li&gt;Include how you would communicate when you are in pain or\ndistress. &lt;/li&gt;\n    &lt;li&gt;Include how you communicate choices.&lt;/li&gt;\n    &lt;li&gt;Include how you give feedback or raise a concern.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;Describe how you\nwould like others to engage and communicate with you&lt;/span&gt;\n    &lt;span lang=\"EN-US\" style=\"\"&gt;, including how you would like to be addressed.&lt;/span&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13008",
+                                    "effectiveDate": "2020-04-27T10:34:59",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.3",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13008",
+                                    "shortName": "please_do_and_please_dont",
+                                    "implementation": [
+                                        {
+                                            "shortName": "please_do_and_please_dont"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Please do and please don't"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;A description of things you want someone supporting you to\ndo or not to do. &lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;For example, this might include:&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;Talk to me not to my carer&lt;/li&gt;\n        &lt;li&gt;Remind me to take my medication&lt;/li&gt;\n        &lt;li&gt;Encourage me to wash my hands regularly&lt;/li&gt;\n        &lt;li&gt;Explain to me what is happening and why&lt;/li&gt;\n        &lt;li&gt;Respond to my communication&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;&amp;#160;A description of things you do not want someone supporting\nfor you to do. For example, this might include:&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;Asking questions about certain topics&lt;/li&gt;\n        &lt;li&gt;Making assumptions about something&lt;/li&gt;\n        &lt;li&gt;Providing support when it is not wanted&lt;/li&gt;\n        &lt;li&gt;Talking to you in a certain way&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13005",
+                                    "effectiveDate": "2020-04-24T11:45:53",
+                                    "statusCode": "draft",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13005",
+                                    "shortName": "my_wellness",
+                                    "implementation": [
+                                        {
+                                            "shortName": "my_wellness"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "My wellness"
+                                        }
+                                    ],
+                                    "synonym": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "0.3"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:8.3pt;line-height:117%\"&gt;\n    &lt;span lang=\"EN-US\" style=\"line-height: 117%;\"&gt;A description covering\nwhat you are able to do, how you engage with others and how you feel on a\ntypical day through to on a day when you are unwell.&lt;/span&gt;\n&lt;/p&gt;\n&lt;p class=\"TableParagraph\" style=\"margin-top:.2pt;margin-right:0cm;margin-bottom: 0cm;margin-left:0cm;margin-bottom:.0001pt\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;Include any causes that might result in you becoming unwell and\nstrategies for avoiding or addressing the causes. For example, not drinking\nenough water could cause constipation.&lt;/li&gt;\n        &lt;li&gt;Include any signs\nthat indicate you might be becoming unwell.&lt;/li&gt;\n        &lt;li&gt;On a bad day describe what is different about what you are able\nto do, how you engage with others and how you feel.&lt;/li&gt;\n        &lt;li&gt;Include\nany medical conditions e.g. dementia and any symptoms e.g. itchiness, cough,\npain that you are living with and that that affect your everyday life and how\nyou manage those conditions.&lt;/li&gt;\n        &lt;li&gt;Include past health\nissues or experiences that need to be considered&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13007",
+                                    "effectiveDate": "2020-04-27T10:29:54",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.3",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13007",
+                                    "shortName": "how_and_when_to_support_me",
+                                    "implementation": [
+                                        {
+                                            "shortName": "how_and_when_to_support_me"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "How and when to support me"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;A description of how and when you want someone caring for\nyou to support you.&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;This could include support needs in an emergency situation\n(for example taking blood)&lt;br clear=\"none\"/&gt;\n    &lt;br clear=\"none\"/&gt;This could include support you need to maintain important\nroutines or to carry out particular activities, for example:&lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;Personal care routines&lt;/li&gt;\n        &lt;li&gt;Eating and drinking&lt;/li&gt;\n        &lt;li&gt;Bedtime routines&lt;/li&gt;\n        &lt;li&gt;Taking medications&lt;/li&gt;\n        &lt;li&gt;Moving and transitioning&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;&amp;#160;This could also include support needed with:&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;wearing\nglasses/hearing aids/false teeth etc.&lt;/li&gt;\n        &lt;li&gt;making informed choices\nor understanding dangers and risks.&lt;/li&gt;\n        &lt;li&gt;managing your emotions, moods\nand behaviours.&lt;/li&gt;\n        &lt;li&gt;memory or confusion.&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;Include how your support needs change in different environments.&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;Include any triggers that might result in you needing\nfurther support and strategies for avoiding or addressing the triggers.&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;Include how you want the support to be provided.&lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "2.16.840.1.113883.3.1937.777.28.2.13094",
+                                    "effectiveDate": "2020-06-22T11:30:09",
+                                    "statusCode": "draft",
+                                    "versionLabel": "0.2",
+                                    "type": "item",
+                                    "minimumMultiplicity": "0",
+                                    "maximumMultiplicity": "1",
+                                    "conformance": "R",
+                                    "isMandatory": "false",
+                                    "iddisplay": "prsb03-dataelement-13094",
+                                    "shortName": "also_worth_knowing_about_me",
+                                    "implementation": [
+                                        {
+                                            "shortName": "also_worth_knowing_about_me"
+                                        }
+                                    ],
+                                    "name": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Also worth knowing about me"
+                                        }
+                                    ],
+                                    "desc": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "&lt;p class=\"MsoNormal\"&gt;A description of what is also worth knowing about you for\npeople caring or supporting you.&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;This could include a short history of your life (where you\nhave worked, where you lived, important events in your life, important people\nin your past life).&lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;This could include a short profile of your current life:&lt;br clear=\"none\"/&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\"/&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"&gt;\n    &lt;ul&gt;\n        &lt;li&gt;your work / study&lt;/li&gt;\n        &lt;li&gt;your aspirations&lt;/li&gt;\n        &lt;li&gt;your skills&lt;/li&gt;\n        &lt;li&gt;your networks&lt;/li&gt;\n        &lt;li&gt;things you like e.g. particular\nfoods, places, a football team and things you like to talk about.&lt;/li&gt;\n        &lt;li&gt;things you dislike&lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/p&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"/&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"/&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"/&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"/&gt;\n&lt;p class=\"MsoNormal\" style=\"margin-left:18.0pt\"/&gt;\n&lt;p class=\"MsoNormal\"&gt;&amp;#160;This could also include any care and support preferences\nthat have not been included elsewhere.&lt;/p&gt;\n&lt;p class=\"MsoNormal\"&gt;\n    &lt;br clear=\"none\"/&gt;\n&lt;/p&gt;"
+                                        }
+                                    ],
+                                    "operationalization": [
+                                        {
+                                            "language": "en-GB",
+                                            "#text": "Free text or multimedia file"
+                                        }
+                                    ],
+                                    "valueDomain": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "2.16.840.1.113883.3.1937.777.28.2.10367",
+                            "effectiveDate": "2018-10-31T00:00:00",
+                            "statusCode": "draft",
+                            "type": "item",
+                            "minimumMultiplicity": "0",
+                            "maximumMultiplicity": "1",
+                            "conformance": "R",
+                            "isMandatory": "false",
+                            "iddisplay": "prsb03-dataelement-10367",
+                            "shortName": "date",
+                            "implementation": [
+                                {
+                                    "shortName": "date"
+                                }
+                            ],
+                            "name": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "Date"
+                                }
+                            ],
+                            "desc": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "This is a record of the date that this information was last updated."
+                                }
+                            ],
+                            "operationalization": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "Date and Time"
+                                }
+                            ],
+                            "valueDomain": [
+                                {
+                                    "type": "datetime",
+                                    "property": [
+                                        {
+                                            "timeStampPrecision": "YMDHM"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "2.16.840.1.113883.3.1937.777.28.2.10368",
+                            "effectiveDate": "2018-10-31T00:00:00",
+                            "statusCode": "draft",
+                            "type": "item",
+                            "minimumMultiplicity": "0",
+                            "maximumMultiplicity": "1",
+                            "conformance": "R",
+                            "isMandatory": "false",
+                            "iddisplay": "prsb03-dataelement-10368",
+                            "shortName": "supported_to_write_this_by",
+                            "implementation": [
+                                {
+                                    "shortName": "supported_to_write_this_by"
+                                }
+                            ],
+                            "name": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "Supported to write this by "
+                                }
+                            ],
+                            "desc": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "Where relevant, this is a record of name, relationship/role and contact details of the individual who supported the person to write this section e.g. carer, family member, advocate, professional."
+                                }
+                            ],
+                            "operationalization": [
+                                {
+                                    "language": "en-GB",
+                                    "#text": "Free text"
+                                }
+                            ],
+                            "valueDomain": [
+                                {
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
