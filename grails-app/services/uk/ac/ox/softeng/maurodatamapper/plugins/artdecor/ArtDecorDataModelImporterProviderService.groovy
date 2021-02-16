@@ -136,6 +136,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                                             String uniqueName = it.name.get(0).content
                                             dataElement.dataType = itemDataType
                                             dataElement.description = it.desc.get(0).content
+                                            dataElement.minMultiplicity = it.maximumMultiplicity
                                             dataElement.maxMultiplicity = it.maximumMultiplicity
 
                                             it.entrySet().collect { el ->
@@ -234,6 +235,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                         String uniqueName = ((Map) ((List) it.name).get(0)).get("#text")
                         dataElement.dataType = itemDataType
                         dataElement.description = ((Map) ((List)it.desc).get(0)).get("#text")
+                        dataElement.minMultiplicity = Integer.valueOf(it.maximumMultiplicity)
                         dataElement.maxMultiplicity = Integer.valueOf(it.maximumMultiplicity != "*" ? it.maximumMultiplicity : "100")
 
                         processMetadata(it, dataElement, null)
