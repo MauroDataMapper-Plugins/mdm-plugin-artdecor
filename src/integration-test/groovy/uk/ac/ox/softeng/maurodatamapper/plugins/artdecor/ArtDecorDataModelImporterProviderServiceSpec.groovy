@@ -76,9 +76,10 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         dataModels[0].dataClasses[0].maxMultiplicity == 49
         dataModels[0].dataClasses[0].metadata.size() == 15
         //dataElements
+        //You should absolutely define the dataclass you\'re hitting NOT the first data element in all the dataclasses
         dataModels[0].dataClasses[0].dataElements.size() == 32
         dataModels[0].dataClasses[0].dataElements[0].label == 'Date of birth'
-        dataModels[0].dataClasses[0].dataElements[0].dataType.label == 'Date of birth'
+        dataModels[0].dataClasses[0].dataElements[0].dataType.label == 'date'
     }
 
     def "verify artDecor-payload-1"() {
@@ -90,7 +91,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
 
         then:
-        dataModels[0].label == 'About me'
+        dataModels[0].label == 'Local authority information'
     }
 
 
