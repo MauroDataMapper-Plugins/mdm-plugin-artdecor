@@ -17,9 +17,6 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
-import groovy.json.JsonSlurper
-import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiInternalException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiUnauthorizedException
@@ -32,7 +29,12 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
+import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.security.User
+
+import groovy.json.JsonSlurper
+import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 
 import java.nio.charset.Charset
 
@@ -49,7 +51,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     @Override
     String getVersion() {
-        '2.1.0-SNAPSHOT'
+        getClass().getPackage().getSpecificationVersion() ?: 'SNAPSHOT'
     }
 
     @Override
