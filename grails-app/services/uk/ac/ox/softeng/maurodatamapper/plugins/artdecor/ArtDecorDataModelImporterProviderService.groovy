@@ -26,7 +26,6 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
-import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
 import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
@@ -35,6 +34,7 @@ import uk.ac.ox.softeng.maurodatamapper.security.User
 import grails.core.GrailsApplication
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
+import org.apache.commons.text.StringEscapeUtils
 
 import java.nio.charset.Charset
 
@@ -42,7 +42,6 @@ import java.nio.charset.Charset
 class ArtDecorDataModelImporterProviderService extends DataModelImporterProviderService<ArtDecorDataModelImporterProviderServiceParameters> {
 
     DataModelService dataModelService
-    GrailsApplication grailsApplication
 
     @Override
     String getDisplayName() {
@@ -162,6 +161,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
             primitiveDataTypes) {
         String uniqueName = ((Map) ((List) it.name)[0]).content
         String description = ((Map) ((List) it.desc)[0]).content
+        StringEscapeUtils.unescapeHtml3(description)
         if (uniqueName == null ) {
             uniqueName = ((Map) ((List) it.name)[0])['#text']
         }
@@ -201,7 +201,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                         uniqueName = ((Map) ((List) it.name)[0])['#text']
                     }
                     String description = ((Map) ((List) it.desc)[0]).content
-
+                    StringEscapeUtils.unescapeHtml3(description)
                     if (description == null ) {
                         description = ((Map) ((List) it.desc)[0])['#text']
                     }
