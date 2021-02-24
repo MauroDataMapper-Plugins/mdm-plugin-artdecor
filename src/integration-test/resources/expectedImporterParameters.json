@@ -6,9 +6,9 @@
     "knownMetadataKeys": [],
     "name": "ArtDecorDataModelImporterProviderService",
     "namespace": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor",
-    "paramClassType": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.ArtDecorDataModelImporterProviderServiceParameters",
+    "paramClassType": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters",
     "providerType": "DataModelImporter",
-    "version": "2.1.0-SNAPSHOT"
+    "version": "${json-unit.matches:version}"
   },
   "parameterGroups": [
     {

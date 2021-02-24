@@ -17,14 +17,12 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
-import uk.ac.ox.softeng.maurodatamapper.core.bootstrap.StandardEmailAddress
-import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
-import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
-import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
-import uk.ac.ox.softeng.maurodatamapper.security.User
-import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
-import uk.ac.ox.softeng.maurodatamapper.test.unit.security.TestUser
 
+import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
+import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
+import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
+
+import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import grails.util.BuildSettings
@@ -37,7 +35,11 @@ import java.nio.file.Paths
 
 @Slf4j
 @Integration
-class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
+@Rollback
+class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
+
+
+    ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
 
     @Shared
     Path resourcesPath
@@ -47,6 +49,9 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
     }
 
+    @Override
+    void setupDomainData() {
+    }
 
     byte[] loadTestFile(String filename) {
         Path testFilePath = resourcesPath.resolve("${filename}").toAbsolutePath()
@@ -54,67 +59,39 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         Files.readAllBytes(testFilePath)
     }
 
-    User getAdmin() {
-        new TestUser(emailAddress: StandardEmailAddress.ADMIN,
-                firstName: 'Admin',
-                lastName: 'User',
-                organisation: 'Oxford BRC Informatics',
-                jobTitle: 'God',
-                id: UUID.randomUUID())
-    }
-
-    def "verify dataModel"() {
-        DataModelService dataModelService = Mock()
-        ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
-        def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
-        def fileParameter = new FileParameter()
-        fileParameter.setFileContents(loadTestFile('artdecor-test-multiple-concepts.json'))
-        parameters.importFile = fileParameter
-
-        given:
-        art.dataModelService = dataModelService
+    def "verify artdecor-test-multiple-concepts"() {
+        def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
+            importFile: new FileParameter(fileContents: loadTestFile('artdecor-test-multiple-concepts.json'))
+        )
 
         when:
-        def dataModels = art.importModels(admin, parameters)
+        def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
 
         then:
-        1 * dataModelService._
         //dataModel
-        assert(dataModels.get(0).label=='Core information standard')
+        dataModels[0].label == 'Core information standard'
         //dataClasses
-        assert(dataModels.get(0).dataClasses.description.get(0)=='Details about documents related to the person. &#160;')
-        assert(dataModels.get(0).dataClasses.label.get(0)=='Documents (including correspondence and images)')
-        assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==49)
-        assert(dataModels.get(0).dataClasses.metadata.get(0).size()==15)
+        dataModels[0].dataClasses[0].description == 'Details about documents related to the person. &#160;'
+        dataModels[0].dataClasses[0].label == 'Documents (including correspondence and images)'
+        dataModels[0].dataClasses[0].maxMultiplicity == 49
+        dataModels[0].dataClasses[0].metadata.size() == 15
         //dataElements
-        assert(dataModels.get(0).dataClasses.dataElements.get(0).size()==32)
-        assert(dataModels.get(0).dataClasses.dataElements.get(0).label.get(0)=='Date of birth')
-        assert(dataModels.get(0).dataClasses.dataElements.get(0).dataType.label.get(0)=='Date of birth')
+        dataModels[0].dataClasses[0].dataElements.size() == 32
+        dataModels[0].dataClasses[0].dataElements[0].label == 'Date of birth'
+        dataModels[0].dataClasses[0].dataElements[0].dataType.label == 'Date of birth'
     }
 
-    def "verify single dataset dataModel"() {
-        DataModelService dataModelService = Mock()
-        ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
-        def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
-        def fileParameter = new FileParameter()
-        fileParameter.setFileContents(loadTestFile('artDecor-payload-2.json'))
-        parameters.importFile = fileParameter
-
-        given:
-        art.dataModelService = dataModelService
+    def "verify artDecor-payload-1"() {
+        def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
+            importFile: new FileParameter(fileContents: loadTestFile('artDecor-payload-1.json'))
+        )
 
         when:
-        def dataModels = art.importModels(admin, parameters)
+        def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
 
         then:
-        1 * dataModelService._
-        //dataModel
-        assert(dataModels.get(0).label=='About me')
+        dataModels[0].label == 'About me'
     }
 
 
-    @Override
-    String getResourcePath() {
-        ''
-    }
 }

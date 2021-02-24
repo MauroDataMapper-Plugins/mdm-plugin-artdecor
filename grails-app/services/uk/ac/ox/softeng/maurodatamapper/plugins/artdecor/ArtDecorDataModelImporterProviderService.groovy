@@ -32,17 +32,17 @@ import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImp
 import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.security.User
 
+import grails.core.GrailsApplication
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 
 import java.nio.charset.Charset
 
 @Slf4j
 class ArtDecorDataModelImporterProviderService extends DataModelImporterProviderService<ArtDecorDataModelImporterProviderServiceParameters> {
 
-    @Autowired
     DataModelService dataModelService
+    GrailsApplication grailsApplication
 
     @Override
     String getDisplayName() {
@@ -60,27 +60,22 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     @Override
-    DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
-        log.debug("importDataModel")
-        importModels(user, t)?.first()
+    DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters params) {
+        log.debug('Import model')
+        importModels(user, params)?.first()
     }
 
     @Override
     List<DataModel> importModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
-        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
-        log.debug("importDataModels")
+        if (!currentUser) throw new ApiUnauthorizedException('ART01', 'User must be logged in to import model')
+        log.debug('Import Models')
         FileParameter importFile = params.importFile
-        if (!importFile.fileContents.size()) throw new ApiBadRequestException('EIS02', 'Cannot import empty file')
+        if (!importFile.fileContents.size()) throw new ApiBadRequestException('ART02', 'Cannot import empty file')
 
         log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
 
-        importDataModels(currentUser, importFile.fileContents)
-    }
-
-    private List<DataModel> importDataModels(User currentUser, byte[] content) {
-        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
         log.debug('Parsing in file content using JsonSlurper')
-        def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
+        def result = new JsonSlurper().parseText(new String(importFile.fileContents, Charset.defaultCharset()))
         def datasets = result.datasets
         def dataset = result.dataset
 
@@ -94,7 +89,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                 imported = processSingleDataset(currentUser, dataset, namespace, imported)
             }
         } catch (Exception ex) {
-            throw new ApiInternalException('ART02', "${ex.message}")
+            throw new ApiInternalException('ART02', "Could not import ArtDecor models", ex)
         }
         imported
     }
@@ -211,13 +206,14 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         }
         imported
     }
+
     private void processDataClass(Map<String,Object> it, DataModel dataModel, String namespace, Set<String> labels) {
         DataClass dataClass = new DataClass(label: it.type)
-        String uniqueName = ((Map) ((List) it.name).get(0)).get("#text")
+        String uniqueName = ((Map) ((List) it.name)[0])["#text"]
         if (!labels.contains(uniqueName)) {
-            dataClass.label = ((Map) ((List) it.name).get(0)).get("#text")
-            dataClass.description = ((Map) ((List)it.desc).get(0)).get("#text")
-            dataClass.maxMultiplicity = Integer.valueOf(it.maximumMultiplicity)
+            dataClass.label = ((Map) ((List) it.name)[0])["#text"]
+            dataClass.description = ((Map) ((List) it.desc)[0])["#text"]
+            dataClass.maxMultiplicity = parseInt(it.maximumMultiplicity as String)
             processElements(it, dataClass, namespace, dataModel, labels)
             processMetadata(it, null, dataClass)
             dataModel.addToDataClasses(dataClass)
@@ -234,11 +230,11 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                     if (it.type == 'item') {
                         DataElement dataElement = new DataElement()
                         DataType itemDataType = new PrimitiveType()
-                        String uniqueName = ((Map) ((List) it.name).get(0)).get("#text")
+                        String uniqueName = ((Map) ((List) it.name)[0])["#text"]
                         dataElement.dataType = itemDataType
-                        dataElement.description = ((Map) ((List)it.desc).get(0)).get("#text")
-                        dataElement.minMultiplicity = Integer.valueOf(it.maximumMultiplicity)
-                        dataElement.maxMultiplicity = Integer.valueOf(it.maximumMultiplicity != "*" ? it.maximumMultiplicity : "100")
+                        dataElement.description = ((Map) ((List) it.desc)[0])["#text"]
+                        dataElement.minMultiplicity = parseInt(it.maximumMultiplicity)
+                        dataElement.maxMultiplicity = parseInt(it.maximumMultiplicity != "*" ? it.maximumMultiplicity : "100")
 
                         processMetadata(it, dataElement, null)
                         if (!labels.contains(uniqueName)) {
@@ -259,12 +255,20 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     private void processMetadata(Map<String, Object> it, DataElement element, DataClass dataClass) {
         String namespace = "org.artdecor"
-        it.entrySet().collect { el ->
+        it.entrySet().collect {el ->
             if (element) {
                 element.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
             } else {
                 dataClass.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
             }
+        }
+    }
+
+    private static Integer parseInt(String value) {
+        try {
+            value.toInteger()
+        } catch (NumberFormatException ex) {
+            null
         }
     }
 }
