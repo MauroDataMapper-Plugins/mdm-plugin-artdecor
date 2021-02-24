@@ -71,15 +71,15 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         //dataModel
         dataModels[0].label == 'Core information standard'
         //dataClasses
-        dataModels[0].dataClasses[0].description == 'Details about documents related to the person. &#160;'
-        dataModels[0].dataClasses[0].label == 'Documents (including correspondence and images)'
-        dataModels[0].dataClasses[0].maxMultiplicity == 49
-        dataModels[0].dataClasses[0].metadata.size() == 15
+        assert(dataModels[0].dataClasses.description[0] == "The person's details and contact information.")
+        assert(dataModels[0].dataClasses[0].label== "Person demographics")
+        assert(dataModels[0].dataClasses[0].maxMultiplicity== 1)
+        assert(dataModels[0].dataClasses[0].metadata.size()== 15)
         //dataElements
-        //You should absolutely define the dataclass you\'re hitting NOT the first data element in all the dataclasses
-        dataModels[0].dataClasses[0].dataElements.size() == 32
-        dataModels[0].dataClasses[0].dataElements[0].label == 'Date of birth'
-        dataModels[0].dataClasses[0].dataElements[0].dataType.label == 'date'
+        //You should absolutely define the dataclass or element you're hitting NOT the first thing in the sub list
+        assert(dataModels[0].dataClasses[0].dataElements.size()== 13)
+        assert(dataModels[0].dataClasses[0].dataElements[0].label == 'Date of birth')
+        assert(dataModels[0].dataClasses[0].dataElements[0].dataType.label== 'date')
     }
 
     def "verify artDecor-payload-1"() {

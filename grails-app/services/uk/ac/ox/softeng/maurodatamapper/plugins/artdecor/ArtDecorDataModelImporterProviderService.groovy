@@ -95,79 +95,15 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     private List<DataModel> processMultiDatasets(User currentUser, datasets, String namespace, List<DataModel> imported) {
+        List<DataModel> dataModels = new ArrayList<>()
         datasets.each { dataset ->
             def datasetList = dataset.dataset
             log.debug("importDataModel ${datasetList.name[0].content}")
-            DataModel dataModel = new DataModel(label: datasetList.name[0].content)
+            //          DataModel dataModel = new DataModel(label: datasetList.name[0].content)
 
-            //Add metadata
-            datasetList.each { dataMap ->
-                dataMap.each {
-                    if (it.key != 'concept'
-                            && it.key != 'desc'
-                            && it.key != 'name') {
-                        dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value.toString()))
-                    }
-                }
-                Set<String> labels = new HashSet<>()
-                def conceptList = dataMap.concept
-                DataClass dataClass = new DataClass(label: datasetList.type)
-                Map<String, PrimitiveType> primitiveTypeMap = [:]
-                if (conceptList) {
-                    conceptList.each {
-                        if (it.type == 'group') {
-
-                            dataClass.label = it.name[0].content
-                            dataClass.description = it.desc[0].content
-                            dataClass.maxMultiplicity = it.maximumMultiplicity
-
-                            def elementList = it.concept
-
-                            it.entrySet().collect { e ->
-                                dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
-                                if (e.key == 'concept') {
-
-                                    elementList.each {
-                                        if (it.type == 'item') {
-                                            DataElement dataElement = new DataElement()
-                                            String uniqueName = it.name[0].content
-                                            String dataTypeName = it.valueDomain[0].type
-                                            if(primitiveTypeMap[dataTypeName]) {
-                                                dataElement.dataType = primitiveTypeMap[dataTypeName]
-                                            } else {
-                                                PrimitiveType newPrimitiveType = new PrimitiveType(label: dataTypeName)
-                                                primitiveTypeMap[dataTypeName] = newPrimitiveType
-                                                dataElement.dataType = newPrimitiveType
-                                                dataModel.addToDataTypes(newPrimitiveType)
-                                            }
-                                            dataElement.description = it.desc[0].content
-                                            dataElement.minMultiplicity = it.maximumMultiplicity
-                                            dataElement.maxMultiplicity = it.maximumMultiplicity
-
-                                            it.entrySet().collect { el ->
-                                                dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value.toString()))
-                                            }
-                                            if (!labels.contains(uniqueName)) {
-                                                dataElement.label = uniqueName
-                                                dataClass.addToDataElements(dataElement)
-                                                labels.add(uniqueName)
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-                            }
-                            dataModel.addToDataClasses(dataClass)
-                        }
-                    }
-                }
-            }
-            dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
-            imported += dataModel
+            dataModels += processSingleDataset(currentUser, datasetList, namespace, imported)
         }
-        imported
+        dataModels
     }
 
     DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
@@ -178,12 +114,16 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     @Override
     Boolean canImportMultipleDomains() {
-        return null
+        return true
     }
 
     List<DataModel> processSingleDataset(User currentUser, dataset, String namespace, List<DataModel> imported) {
-        log.debug("importDataModel ${dataset.name[0].content}")
-        DataModel dataModel = new DataModel(label: dataset.name[0][0].get('#text'))
+        def name = dataset.name[0].content
+        if (name == null) {
+            name = dataset.name[0][0]['#text']
+        }
+        log.debug("importDataModel ${name}")
+        DataModel dataModel = new DataModel(label: name)
         Set<String> labels = new HashSet<>()
         Map<String, PrimitiveType> primitiveDataTypes = [:]
         dataset.each { dataMap ->
@@ -220,13 +160,22 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     private DataClass processDataClass(Map<String,Object> it, DataModel dataModel, String namespace, Set<String> labels, Map<String, PrimitiveType>
             primitiveDataTypes) {
+        String uniqueName = ((Map) ((List) it.name)[0]).content
+        String description = ((Map) ((List) it.desc)[0]).content
+        if (uniqueName == null ) {
+            uniqueName = ((Map) ((List) it.name)[0])['#text']
+        }
+
+        if (description == null ) {
+            description = ((Map) ((List) it.desc)[0])['#text']
+        }
+
         DataClass dataClass = new DataClass(label: it.type)
-        String uniqueName = ((Map) ((List) it.name)[0])['#text']
         if (!labels.contains(uniqueName)) {
-            dataClass.label = ((Map) ((List) it.name)[0])['#text']
-            dataClass.description = ((Map) ((List) it.desc)[0])['#text']
+            dataClass.label = uniqueName
+            dataClass.description = description
             dataClass.minMultiplicity = parseInt(it.minimumMultiplicity)
-            dataClass.maxMultiplicity = parseInt(it.maximumMultiplicity == '*' ? '-1' : it.maximumMultiplicity)
+            dataClass.maxMultiplicity = parseInt(it.maximumMultiplicity == '*' ? -1 : it.maximumMultiplicity)
             it.concept.each { concept ->
                 if (concept.type == 'group') {
                     DataClass childDataClass = processDataClass(concept as Map<String, Object>, dataModel, namespace, labels, primitiveDataTypes)
@@ -247,9 +196,17 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
             dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value.toString()))
             if (e.key == 'concept') {
                 elementList.each {
+                    String uniqueName = ((Map) ((List) it.name)[0]).content
+                    if (uniqueName == null ) {
+                        uniqueName = ((Map) ((List) it.name)[0])['#text']
+                    }
+                    String description = ((Map) ((List) it.desc)[0]).content
+
+                    if (description == null ) {
+                        description = ((Map) ((List) it.desc)[0])['#text']
+                    }
                     if (it.type == 'item') {
                         DataElement dataElement = new DataElement()
-                        String uniqueName = ((Map) ((List) it.name)[0])['#text']
                         String dataTypeName = it.valueDomain[0].type
                         if(primitiveTypeMap[dataTypeName]) {
                             dataElement.dataType = primitiveTypeMap[dataTypeName]
@@ -260,9 +217,9 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
                             dataModel.addToDataTypes(newPrimitiveType)
                         }
 
-                        dataElement.description = ((Map) ((List) it.desc)[0])['#text']
+                        dataElement.description = description
                         dataElement.minMultiplicity = parseInt(it.minimumMultiplicity)
-                        dataElement.maxMultiplicity = parseInt(it.maximumMultiplicity == '*' ? '-1' : it.maximumMultiplicity)
+                        dataElement.maxMultiplicity = parseInt(it.maximumMultiplicity == '*' ? -1 : it.maximumMultiplicity)
 
                         processMetadata(it, dataElement, null)
                         if (!labels.contains(uniqueName)) {
@@ -290,11 +247,14 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
         }
     }
 
-    private static Integer parseInt(String value) {
-        try {
-            value.toInteger()
-        } catch (NumberFormatException ex) {
-            null
+    private static Integer parseInt(def value) {
+        if(value instanceof Number) return value.toInteger()
+        if(value instanceof String) {
+            try {
+                value.toInteger()
+            } catch (NumberFormatException ignored) {
+            }
         }
+        null
     }
 }
