@@ -19,6 +19,8 @@ package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
 
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
 
@@ -38,6 +40,7 @@ import java.nio.file.Paths
 @Rollback
 class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
 
+    DataModelService dataModelService
 
     ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
 
@@ -68,18 +71,26 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
 
         then:
+        dataModels.size() == 1
+        !dataModels.first().id
+
+        when:
+        DataModel saved = dataModelService.saveModelWithContent(dataModels.first())
+
+        then:
         //dataModel
-        dataModels[0].label == 'Core information standard'
+        saved.id
+        saved.label == 'Core information standard'
         //dataClasses
-        assert(dataModels[0].dataClasses.description[0] == "The person's details and contact information.")
-        assert(dataModels[0].dataClasses[0].label== "Person demographics")
-        assert(dataModels[0].dataClasses[0].maxMultiplicity== 1)
-        assert(dataModels[0].dataClasses[0].metadata.size()== 15)
+        saved.dataClasses.description[0] == "The person's details and contact information."
+        saved.dataClasses[0].label== "Person demographics"
+        saved.dataClasses[0].maxMultiplicity== 1
+        saved.dataClasses[0].metadata.size()== 15
         //dataElements
         //You should absolutely define the dataclass or element you're hitting NOT the first thing in the sub list
-        assert(dataModels[0].dataClasses[0].dataElements.size()== 13)
-        assert(dataModels[0].dataClasses[0].dataElements[0].label == 'Date of birth')
-        assert(dataModels[0].dataClasses[0].dataElements[0].dataType.label== 'date')
+        saved.dataClasses[0].dataElements.size()== 13
+        saved.dataClasses[0].dataElements[0].label == 'Date of birth'
+        saved.dataClasses[0].dataElements[0].dataType.label== 'date'
     }
 
     def "verify artDecor-payload-1"() {
