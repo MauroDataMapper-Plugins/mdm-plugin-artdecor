@@ -1,7 +1,7 @@
 {
   "importer": {
     "allowsExtraMetadataKeys": true,
-    "canImportMultipleDomains": null,
+    "canImportMultipleDomains": true,
     "displayName": "Art Decor Importer",
     "knownMetadataKeys": [],
     "name": "ArtDecorDataModelImporterProviderService",

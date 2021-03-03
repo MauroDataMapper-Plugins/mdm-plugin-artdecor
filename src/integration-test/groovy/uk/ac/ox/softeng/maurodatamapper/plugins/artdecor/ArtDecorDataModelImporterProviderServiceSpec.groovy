@@ -18,9 +18,13 @@
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
 
+import uk.ac.ox.softeng.maurodatamapper.core.container.Folder
+import uk.ac.ox.softeng.maurodatamapper.core.facet.Metadata
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
 import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
 
@@ -54,6 +58,11 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
 
     @Override
     void setupDomainData() {
+
+        folder = new Folder(label: 'catalogue', createdBy: admin.emailAddress)
+        checkAndSave(folder)
+        //        testAuthority = new Authority(label: 'Test Authority', url: 'http://localhost', createdBy: StandardEmailAddress.INTEGRATION_TEST)
+        //        checkAndSave(testAuthority)
     }
 
     byte[] loadTestFile(String filename) {
@@ -63,7 +72,10 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
     }
 
     def "verify artdecor-test-multiple-concepts"() {
+        given:
+        setupDomainData()
         def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
+            folderId: folder.id,
             importFile: new FileParameter(fileContents: loadTestFile('artdecor-test-multiple-concepts.json'))
         )
 
@@ -73,6 +85,14 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         then:
         dataModels.size() == 1
         !dataModels.first().id
+        dataModels.first().childDataClasses.size() == 37
+
+        when:
+        dataModels.first().folder = folder
+        check(dataModels.first())
+
+        then:
+        !dataModels.first().hasErrors()
 
         when:
         DataModel saved = dataModelService.saveModelWithContent(dataModels.first())
@@ -81,28 +101,49 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         //dataModel
         saved.id
         saved.label == 'Core information standard'
-        //dataClasses
-        saved.dataClasses.description[0] == "The person's details and contact information."
-        saved.dataClasses[0].label== "Person demographics"
-        saved.dataClasses[0].maxMultiplicity== 1
-        saved.dataClasses[0].metadata.size()== 15
+        saved.childDataClasses.size() == 37
+        saved.dataClasses.size() == 497
+        saved.primitiveTypes.size() == 100
+        saved.metadata.size() == 14
+
+        when:
+        DataClass dataClass = saved.childDataClasses.find {it.label == 'Person demographics'}
+
+        then:
+        dataClass
+        dataClass.description == 'The person\'s details and contact information.'
+        dataClass.maxMultiplicity == 1
+        dataClass.minMultiplicity == 1
+        Metadata.countByCatalogueItemId(dataClass.id) == 10
         //dataElements
         //You should absolutely define the dataclass or element you're hitting NOT the first thing in the sub list
-        saved.dataClasses[0].dataElements.size()== 13
-        saved.dataClasses[0].dataElements[0].label == 'Date of birth'
-        saved.dataClasses[0].dataElements[0].dataType.label== 'date'
+        dataClass.dataElements.size() == 13
+
+        when:
+        DataElement dataElement = dataClass.dataElements.find {it.label == 'Date of birth'}
+
+        then:
+        dataElement
+        dataElement.description == 'The date of birth of the person.'
+        dataElement.maxMultiplicity == 1
+        dataElement.minMultiplicity == 1
+        dataElement.dataType.label == 'date'
+        dataElement.metadata.size() == 14
+
+        dataClass.dataClasses.size() == 4
     }
 
-    def "verify artDecor-payload-1"() {
+    def "verify artDecor-payload-2"() {
+        given:
         def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
-            importFile: new FileParameter(fileContents: loadTestFile('artDecor-payload-1.json'))
+            importFile: new FileParameter(fileContents: loadTestFile('artDecor-payload-2.json'))
         )
 
         when:
-        def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
+        DataModel dataModel = artDecorDataModelImporterProviderService.importModel(admin, parameters)
 
         then:
-        dataModels[0].label == 'Local authority information'
+        dataModel.label == 'Local authority information'
     }
 
 
