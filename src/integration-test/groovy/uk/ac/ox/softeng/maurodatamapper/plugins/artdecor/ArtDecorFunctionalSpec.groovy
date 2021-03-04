@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 University of Oxford
+ * Copyright 2020 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,17 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
+import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
+
+import grails.core.GrailsApplication
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import grails.util.BuildSettings
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
+import spock.lang.Ignore
 import spock.lang.Shared
-import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
-import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
 
 import java.nio.charset.Charset
 import java.nio.file.Files
@@ -40,10 +43,13 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
     @Shared
     Path resourcesPath
 
+    GrailsApplication grailsApplication
+    ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
+
     @OnceBefore
     void setupResourcesPath() {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
-    }      
+    }
 
     @Override
     String getResourcePath() {
@@ -57,19 +63,25 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
     }     
 
     void 'test importer parameters'() {
+        given:
+        String version = artDecorDataModelImporterProviderService.version
+        String expected = new String(loadTestFile('expectedImporterParameters.json'))
+        String url = "importer/parameters/uk.ac.ox.softeng.maurodatamapper.plugins.artdecor/ArtDecorDataModelImporterProviderService/$version"
+
         when:
-        GET('importer/parameters/uk.ac.ox.softeng.maurodatamapper.plugins.artdecor/ArtDecorDataModelImporterProviderService/2.1.0-SNAPSHOT', STRING_ARG)
+        GET(url, STRING_ARG)
 
         then:
-        verifyJsonResponse OK, new String(loadTestFile('expectedImporterParameters.json'))
+        verifyJsonResponse OK, expected
     }
 
+    @Ignore('doesnt actually test anything')
     void 'test artDecor dataModel'() {
-        when:
+        given:
         def result = new JsonSlurper().parseText(new String(loadTestFile('artdecor-test.json'), Charset.defaultCharset()))
 
-        then:
-        assert result.datasets.each {it.equals(new DataModel(label: 'name'))}
+        expect:
+        result.datasets.each {(it == new DataModel(label: 'name'))}
     }
 
 }

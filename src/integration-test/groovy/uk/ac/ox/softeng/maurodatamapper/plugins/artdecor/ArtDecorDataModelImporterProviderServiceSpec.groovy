@@ -1,16 +1,39 @@
+/*
+ * Copyright 2020 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
+
+import uk.ac.ox.softeng.maurodatamapper.core.container.Folder
+import uk.ac.ox.softeng.maurodatamapper.core.facet.Metadata
+import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
+import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
+import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
+import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
+import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
+
+import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
 import grails.util.BuildSettings
 import groovy.util.logging.Slf4j
 import spock.lang.Shared
-import uk.ac.ox.softeng.maurodatamapper.core.bootstrap.StandardEmailAddress
-import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
-import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
-import uk.ac.ox.softeng.maurodatamapper.security.User
-import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
-import uk.ac.ox.softeng.maurodatamapper.test.unit.security.TestUser
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -18,7 +41,12 @@ import java.nio.file.Paths
 
 @Slf4j
 @Integration
-class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
+@Rollback
+class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
+
+    DataModelService dataModelService
+
+    ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
 
     @Shared
     Path resourcesPath
@@ -28,6 +56,14 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
     }
 
+    @Override
+    void setupDomainData() {
+
+        folder = new Folder(label: 'catalogue', createdBy: admin.emailAddress)
+        checkAndSave(folder)
+        //        testAuthority = new Authority(label: 'Test Authority', url: 'http://localhost', createdBy: StandardEmailAddress.INTEGRATION_TEST)
+        //        checkAndSave(testAuthority)
+    }
 
     byte[] loadTestFile(String filename) {
         Path testFilePath = resourcesPath.resolve("${filename}").toAbsolutePath()
@@ -35,39 +71,80 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseFunctionalSpec {
         Files.readAllBytes(testFilePath)
     }
 
-    User getAdmin() {
-        new TestUser(emailAddress: StandardEmailAddress.ADMIN,
-                firstName: 'Admin',
-                lastName: 'User',
-                organisation: 'Oxford BRC Informatics',
-                jobTitle: 'God',
-                id: UUID.randomUUID())
-    }
-
-    def "verify dataModel"() {
-        DataModelService dataModelService = Mock()
-        ArtDecorDataModelImporterProviderService art = new ArtDecorDataModelImporterProviderService()
-        def parameters = new ArtDecorDataModelImporterProviderServiceParameters()
-        def fileParameter = new FileParameter()
-        fileParameter.setFileContents(loadTestFile('artdecor-test-multiple-concepts.json'))
-        parameters.importFile = fileParameter
-
+    def "verify artdecor-test-multiple-concepts"() {
         given:
-        art.dataModelService = dataModelService
+        setupDomainData()
+        def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
+            folderId: folder.id,
+            importFile: new FileParameter(fileContents: loadTestFile('artdecor-test-multiple-concepts.json'))
+        )
 
         when:
-        def dataModels = art.importModels(admin, parameters)
+        def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
 
         then:
-        1 * dataModelService._
-        assert(dataModels.get(0).label=='Problem list')
-        assert(dataModels.get(0).dataClasses.description.get(0)=='This is a problem list record entry.  There may be 0 to many record entries under problem list.  Each record entry is made up of a number of elements or data items. ')
-        assert(dataModels.get(0).dataClasses.label.get(0)=='Problem list record entry')
-        assert(dataModels.get(0).dataClasses.maxMultiplicity.get(0)==42)
+        dataModels.size() == 1
+        !dataModels.first().id
+        dataModels.first().childDataClasses.size() == 37
+
+        when:
+        dataModels.first().folder = folder
+        check(dataModels.first())
+
+        then:
+        !dataModels.first().hasErrors()
+
+        when:
+        DataModel saved = dataModelService.saveModelWithContent(dataModels.first())
+
+        then:
+        //dataModel
+        saved.id
+        saved.label == 'Core information standard'
+        saved.childDataClasses.size() == 37
+        saved.dataClasses.size() == 497
+        saved.primitiveTypes.size() == 100
+        saved.metadata.size() == 14
+
+        when:
+        DataClass dataClass = saved.childDataClasses.find {it.label == 'Person demographics'}
+
+        then:
+        dataClass
+        dataClass.description == 'The person\'s details and contact information.'
+        dataClass.maxMultiplicity == 1
+        dataClass.minMultiplicity == 1
+        Metadata.countByCatalogueItemId(dataClass.id) == 10
+        //dataElements
+        //You should absolutely define the dataclass or element you're hitting NOT the first thing in the sub list
+        dataClass.dataElements.size() == 13
+
+        when:
+        DataElement dataElement = dataClass.dataElements.find {it.label == 'Date of birth'}
+
+        then:
+        dataElement
+        dataElement.description == 'The date of birth of the person.'
+        dataElement.maxMultiplicity == 1
+        dataElement.minMultiplicity == 1
+        dataElement.dataType.label == 'date'
+        dataElement.metadata.size() == 14
+
+        dataClass.dataClasses.size() == 4
     }
 
-    @Override
-    String getResourcePath() {
-        ''
+    def "verify artDecor-payload-2"() {
+        given:
+        def parameters = new ArtDecorDataModelImporterProviderServiceParameters(
+            importFile: new FileParameter(fileContents: loadTestFile('artDecor-payload-2.json'))
+        )
+
+        when:
+        DataModel dataModel = artDecorDataModelImporterProviderService.importModel(admin, parameters)
+
+        then:
+        dataModel.label == 'Local authority information'
     }
+
+
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 University of Oxford
+ * Copyright 2020 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,31 +17,29 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
-
-import groovy.json.JsonSlurper
-import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiBadRequestException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiInternalException
 import uk.ac.ox.softeng.maurodatamapper.api.exception.ApiUnauthorizedException
-import uk.ac.ox.softeng.maurodatamapper.core.facet.Metadata
+import uk.ac.ox.softeng.maurodatamapper.core.model.CatalogueItem
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
 import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModel
-import uk.ac.ox.softeng.maurodatamapper.datamodel.DataModelService
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataClass
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.DataElement
-import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.DataType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.item.datatype.PrimitiveType
 import uk.ac.ox.softeng.maurodatamapper.datamodel.provider.importer.DataModelImporterProviderService
+import uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters
 import uk.ac.ox.softeng.maurodatamapper.security.User
+
+import groovy.json.JsonSlurper
+import groovy.util.logging.Slf4j
+import org.apache.commons.text.StringEscapeUtils
 
 import java.nio.charset.Charset
 
 @Slf4j
 class ArtDecorDataModelImporterProviderService extends DataModelImporterProviderService<ArtDecorDataModelImporterProviderServiceParameters> {
 
-    @Autowired
-    DataModelService dataModelService
+    public static List<String> NON_METADATA_KEYS = ['minimumMultiplicity', 'maximumMultiplicity', 'type', 'name', 'desc', 'valueDomain', 'type']
 
     @Override
     String getDisplayName() {
@@ -50,7 +48,7 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
 
     @Override
     String getVersion() {
-        '2.1.0-SNAPSHOT'
+        getClass().getPackage().getSpecificationVersion() ?: 'SNAPSHOT'
     }
 
     @Override
@@ -59,132 +57,158 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     @Override
-    DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters t) {
-        log.debug("importDataModel")
-        importModels(user, t)?.first()
+    Boolean canImportMultipleDomains() {
+        return true
+    }
+
+    @Override
+    DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters params) {
+        log.debug('Import model')
+        importModels(user, params)?.first()
     }
 
     @Override
     List<DataModel> importModels(User currentUser, ArtDecorDataModelImporterProviderServiceParameters params) {
-        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
-        log.debug("importDataModels")
+        if (!currentUser) throw new ApiUnauthorizedException('ART01', 'User must be logged in to import model')
+        log.debug('Import Models')
         FileParameter importFile = params.importFile
-        if (!importFile.fileContents.size()) throw new ApiBadRequestException('EIS02', 'Cannot import empty file')
-
-        log.info('Importing {} as {}', importFile.fileName, currentUser.emailAddress)
-
-        importDataModels(currentUser, importFile.fileContents)
-    }
-
-    private List<DataModel> importDataModels(User currentUser, byte[] content) {
-        if (!currentUser) throw new ApiUnauthorizedException('GLUEIP01', 'User must be logged in to import model')
-        log.debug('Parsing in file content using JsonSlurper')
-        def result = new JsonSlurper().parseText(new String(content, Charset.defaultCharset()))
-        def datasets = result.datasets
-
-        String namespace = "org.artdecor"
-
+        if (!importFile.fileContents.size()) throw new ApiBadRequestException('ART02', 'Cannot import empty file')
         List<DataModel> imported = []
         try {
-            datasets.each { dataset ->
-                def datasetList = dataset.dataset
-                log.debug("importDataModel ${datasetList.name.get(0).content}")
-                DataModel dataModel = new DataModel(label: datasetList.name.get(0).content)
+            log.debug('Parsing in file content using JsonSlurper')
+            Map<String, List> result = new JsonSlurper().parseText(new String(importFile.fileContents, Charset.defaultCharset()))
+            List<Map> datasets = result.datasets
+            List<Map> dataset = result.dataset
 
-                //Add metadata
-                datasetList.each { dataMap ->
-                    dataMap.each {
-                        if (it.key != 'concept'
-                                && it.key != 'desc'
-                                && it.key != 'name') {
-                            dataModel.addToMetadata(new Metadata(namespace: namespace, key: it.key, value: it.value))
-                        }
-                    }
-                    Set<String> labels = new HashSet<>()
-                    def conceptList = dataMap.concept
-                    DataClass dataClass = new DataClass(label: datasetList.type)
-                    if (conceptList) {
-                        conceptList.each {
-                            if (it.type == 'group') {
-
-                                dataClass.label = it.name.get(0).content
-                                dataClass.description = it.desc.get(0).content
-                                dataClass.maxMultiplicity = it.maximumMultiplicity
-
-                                def elementList = it.concept
-
-                                it.entrySet().collect { e ->
-                                    if (notExcludedProperties(e.key)){
-                                        dataClass.addToMetadata(new Metadata(namespace: namespace, key: e.key, value: e.value))
-                                    }
-                                    if (e.key == 'concept') {
-
-                                        elementList.each {
-                                            if (it.type == 'item') {
-                                                DataElement dataElement = new DataElement()
-                                                DataType itemDataType = new PrimitiveType()
-                                                String uniqueName = it.name.get(0).content
-                                                dataElement.dataType = itemDataType
-                                                dataElement.description = it.desc.get(0).content
-                                                dataElement.maxMultiplicity = it.maximumMultiplicity
-
-                                                it.entrySet().collect { el ->
-                                                    if (notExcludedProperties(el.key)){
-                                                        dataElement.addToMetadata(new Metadata(namespace: namespace, key: el.key, value: el.value))
-                                                    }
-                                                }
-                                                if ( !labels.contains(uniqueName)) {
-                                                    itemDataType.label = uniqueName
-                                                    dataModel.addToDataTypes(itemDataType)
-                                                    dataElement.label = uniqueName
-                                                    dataClass.addToDataElements(dataElement)
-                                                    labels.add(uniqueName)
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                                dataModel.addToDataClasses(dataClass)
-                            }
-                        }
-                    }
-                }
-                dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
-                imported += dataModel
-
+            if (datasets) {
+                imported = processMultiDatasets(currentUser, datasets)
+            } else if (dataset) {
+                imported = [processSingleDataset(currentUser, dataset.first() as Map<String, Object>)]
             }
         } catch (Exception ex) {
-            throw new ApiInternalException('ART02', "${ex.message}")
+            throw new ApiInternalException('ART03', 'Could not import ArtDecor models', ex)
         }
         imported
     }
 
-    private boolean notExcludedProperties(String key) {
-        return (key != 'implementation' && key != 'concept'
-                && key != 'context'
-                && key != 'comment'
-                && key != 'source'
-                && key != 'rationale'
-                && key != 'property'
-                && key != 'valueSet'
-                && key != 'desc'
-                && key != 'relationship'
-                && key != 'name'
-                && key != 'operationalization'
-                && key != 'valueDomain')
+    private List<DataModel> processMultiDatasets(User currentUser, List<Map> datasets) {
+        datasets.collect {dataset ->
+            processSingleDataset(currentUser, dataset.dataset.first())
+        }
     }
 
-    DataModel updateImportedModelFromParameters(DataModel dataModel, ArtDecorDataModelImporterProviderServiceParameters params, boolean list = false) {
-        if (params.finalised != null) dataModel.finalised = params.finalised
-        if (!list && params.modelName) dataModel.label = params.modelName
+
+    private DataModel processSingleDataset(User currentUser, Map<String, Object> dataset) {
+
+        log.debug("Importing DataModel ${name}")
+        DataModel dataModel = new DataModel(label: extractValue(dataset.name),
+                                            description: StringEscapeUtils.unescapeHtml3(extractValue(dataset.desc)))
+
+        processMetadata(dataset, dataModel)
+
+        Map<String, PrimitiveType> primitiveDataTypes = [:]
+        if (dataset.concept) {
+            dataset.concept.each {concept ->
+                if (concept.type == 'group') {
+                    processDataClass(concept as Map<String, Object>, dataModel, primitiveDataTypes)
+                } else {
+                    throw new ApiInternalException('ART04', 'Cannot process non-group concepts at the top level of the dataset')
+                }
+            }
+        }
+        dataModelService.checkImportedDataModelAssociations(currentUser, dataModel)
         dataModel
     }
 
-    @Override
-    Boolean canImportMultipleDomains() {
-        return null
+
+    private DataClass processDataClass(Map<String, Object> dataClassConcept, DataModel dataModel,
+                                       Map<String, PrimitiveType> primitiveDataTypes) {
+
+        DataClass dataClass = new DataClass(
+            label: extractValue(dataClassConcept.name),
+            description: StringEscapeUtils.unescapeHtml3(extractValue(dataClassConcept.desc)),
+            minMultiplicity: parseInt(dataClassConcept.minimumMultiplicity),
+            maxMultiplicity: parseInt(dataClassConcept.maximumMultiplicity == '*' ? -1 : dataClassConcept.maximumMultiplicity)
+        )
+        log.debug('Created dataclass {}', dataClass.label)
+        dataClassConcept.concept.each {Map concept ->
+            if (concept.type == 'group') {
+                DataClass childDataClass = processDataClass(concept as Map<String, Object>, dataModel, primitiveDataTypes)
+                dataClass.addToDataClasses(childDataClass)
+            } else if (concept.type == 'item') {
+                processDataElement(concept as Map<String, Object>, dataClass, dataModel, primitiveDataTypes)
+            } else {
+                throw new ApiInternalException('ART05', "Unknown concept type inside DataClass ${concept.type}")
+            }
+        }
+        processMetadata(dataClassConcept, dataClass)
+        dataModel.addToDataClasses(dataClass)
+        dataClass
+    }
+
+    private void processDataElement(Map<String, Object> dataElementConcept, DataClass dataClass, DataModel dataModel,
+                                    Map<String, PrimitiveType> primitiveTypeMap) {
+
+        String dataTypeLabel = extractDataTypeLabel(dataElementConcept.valueDomain[0] as Map<String, Object>)
+        if (!primitiveTypeMap.containsKey(dataTypeLabel)) {
+            processDataType(dataTypeLabel, dataElementConcept.valueDomain[0] as Map<String, Object>, dataModel, primitiveTypeMap)
+        }
+
+        DataElement dataElement = new DataElement(
+            label: extractValue(dataElementConcept.name),
+            description: StringEscapeUtils.unescapeHtml3(extractValue(dataElementConcept.desc)),
+            minMultiplicity: parseInt(dataElementConcept.minimumMultiplicity),
+            maxMultiplicity: parseInt(dataElementConcept.maximumMultiplicity == '*' ? -1 : dataElementConcept.maximumMultiplicity),
+            dataType: primitiveTypeMap[dataTypeLabel]
+        )
+
+        processMetadata(dataElementConcept, dataElement)
+        dataClass.addToDataElements(dataElement)
+    }
+
+    private void processDataType(String dataTypeLabel, Map<String, Object> dataTypeValueDomain, DataModel dataModel,
+                                 Map<String, PrimitiveType> primitiveTypeMap) {
+        PrimitiveType primitiveType = new PrimitiveType(label: dataTypeLabel)
+        if (dataTypeValueDomain.property) processMetadata(dataTypeValueDomain.property[0] as Map<String, Object>, primitiveType)
+        if (dataTypeValueDomain.conceptList) processMetadata(dataTypeValueDomain.conceptList[0] as Map<String, Object>, primitiveType)
+        primitiveTypeMap[primitiveType.label] = primitiveType
+        dataModel.addToDataTypes(primitiveType)
+    }
+
+    private void processMetadata(Map<String, Object> catalogueItemMap, CatalogueItem catalogueItem) {
+        catalogueItemMap.each {key, value ->
+            if (!(key in NON_METADATA_KEYS)) {
+                String extractedValue = value instanceof String ? value : extractValue(value) ?: value.toString()
+                catalogueItem.addToMetadata(namespace: namespace, key: key, value: extractedValue)
+            }
+
+        }
+    }
+
+    private static Integer parseInt(def value) {
+        if (value instanceof Number) return value.toInteger()
+        if (value instanceof String) {
+            try {
+                return value.toInteger()
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        null
+    }
+
+    private static String extractValue(def information) {
+        if (information instanceof List<Map<String, String>>) {
+            return information.first().content ?: information.first()['#text']
+        }
+        null
+    }
+
+    private static String extractDataTypeLabel(Map<String, Object> dataTypeValueDomain) {
+        switch (dataTypeValueDomain.type) {
+            case 'code': case 'ordinal':
+                return "${dataTypeValueDomain.type}_${dataTypeValueDomain.conceptList[0].id}"
+            default:
+                return dataTypeValueDomain.type
+        }
     }
 }
