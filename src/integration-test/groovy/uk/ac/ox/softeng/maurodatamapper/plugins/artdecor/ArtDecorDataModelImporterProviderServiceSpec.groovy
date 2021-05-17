@@ -80,7 +80,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         )
 
         when:
-        def dataModels = artDecorDataModelImporterProviderService.importModels(admin, parameters)
+        def dataModels = artDecorDataModelImporterProviderService.importDomains(admin, parameters)
 
         then:
         dataModels.size() == 1
@@ -114,7 +114,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
         dataClass.description == 'The person\'s details and contact information.'
         dataClass.maxMultiplicity == 1
         dataClass.minMultiplicity == 1
-        Metadata.countByCatalogueItemId(dataClass.id) == 10
+        Metadata.countByMultiFacetAwareItemId(dataClass.id) == 10
         //dataElements
         //You should absolutely define the dataclass or element you're hitting NOT the first thing in the sub list
         dataClass.dataElements.size() == 13
