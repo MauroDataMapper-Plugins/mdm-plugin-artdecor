@@ -31,6 +31,7 @@ import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
+import grails.testing.spock.RunOnce
 import grails.util.BuildSettings
 import groovy.util.logging.Slf4j
 import spock.lang.Shared
@@ -51,8 +52,7 @@ class ArtDecorDataModelImporterProviderServiceSpec extends BaseIntegrationSpec {
     @Shared
     Path resourcesPath
 
-    @OnceBefore
-    void setupResourcesPath() {
+    def setupSpec() {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
     }
 

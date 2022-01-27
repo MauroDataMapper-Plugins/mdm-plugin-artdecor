@@ -23,6 +23,7 @@ import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
 import grails.core.GrailsApplication
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
+import grails.testing.spock.RunOnce
 import grails.util.BuildSettings
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
@@ -46,8 +47,7 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
     GrailsApplication grailsApplication
     ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
 
-    @OnceBefore
-    void setupResourcesPath() {
+    def setupSpec() {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
     }
 
@@ -60,7 +60,7 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
         Path testFilePath = resourcesPath.resolve("${filename}").toAbsolutePath()
         assert Files.exists(testFilePath)
         Files.readAllBytes(testFilePath)
-    }     
+    }
 
     void 'test importer parameters'() {
         given:
