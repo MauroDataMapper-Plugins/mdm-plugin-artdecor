@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
+ * Copyright 2020-2022 University of Oxford and Health and Social Care Information Centre, also known as NHS Digital
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import uk.ac.ox.softeng.maurodatamapper.test.functional.BaseFunctionalSpec
 import grails.core.GrailsApplication
 import grails.testing.mixin.integration.Integration
 import grails.testing.spock.OnceBefore
+import grails.testing.spock.RunOnce
 import grails.util.BuildSettings
 import groovy.json.JsonSlurper
 import groovy.util.logging.Slf4j
@@ -46,8 +47,7 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
     GrailsApplication grailsApplication
     ArtDecorDataModelImporterProviderService artDecorDataModelImporterProviderService
 
-    @OnceBefore
-    void setupResourcesPath() {
+    def setupSpec() {
         resourcesPath = Paths.get(BuildSettings.BASE_DIR.absolutePath, 'src', 'integration-test', 'resources').toAbsolutePath()
     }
 
@@ -60,7 +60,7 @@ class ArtDecorFunctionalSpec extends BaseFunctionalSpec {
         Path testFilePath = resourcesPath.resolve("${filename}").toAbsolutePath()
         assert Files.exists(testFilePath)
         Files.readAllBytes(testFilePath)
-    }     
+    }
 
     void 'test importer parameters'() {
         given:
