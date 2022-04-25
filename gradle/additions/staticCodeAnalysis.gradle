@@ -2,6 +2,7 @@ import java.nio.file.Files
 
 sca.ciEnabled project.hasProperty('ciRun') ? project.findProperty('ciRun').toBoolean() : false
 
+// Use mdm-core to supply all the SCA files
 java.nio.file.Path codenarcPath = Files.createTempFile('codenarc', '.groovy')
 Files.write(codenarcPath,
             'https://raw.githubusercontent.com/MauroDataMapper/mdm-core/develop/gradle/static_code_analysis/codenarc_rules.groovy'.toURL().readLines())
