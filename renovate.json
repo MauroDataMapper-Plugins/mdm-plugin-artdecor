@@ -1,11 +1,16 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":dependencyDashboard",
+    "schedule:nonOfficeHours",
+    ":reviewer(olliefreeman)",
+    ":label(dependencies)"
   ],
   "packageRules": [
     {
       "excludePackagePrefixes": [
         "org.grails",
+        "org.grails.plugins",
         "org.springframework",
         "io.micronaut",
         "org.hibernate",
@@ -13,8 +18,5 @@
         "org.codehaus.groovy"
       ]
     }
-  ],
-    "assignees": [
-      "ollie.freeman"
-    ]
+  ]
 }
