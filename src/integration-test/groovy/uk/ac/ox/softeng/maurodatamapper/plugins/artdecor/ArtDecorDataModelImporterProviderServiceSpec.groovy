@@ -17,7 +17,6 @@
  */
 package uk.ac.ox.softeng.maurodatamapper.plugins.artdecor
 
-
 import uk.ac.ox.softeng.maurodatamapper.core.container.Folder
 import uk.ac.ox.softeng.maurodatamapper.core.facet.Metadata
 import uk.ac.ox.softeng.maurodatamapper.core.provider.importer.parameter.FileParameter
@@ -30,8 +29,6 @@ import uk.ac.ox.softeng.maurodatamapper.test.integration.BaseIntegrationSpec
 
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
-import grails.testing.spock.OnceBefore
-import grails.testing.spock.RunOnce
 import grails.util.BuildSettings
 import groovy.util.logging.Slf4j
 import spock.lang.Shared
