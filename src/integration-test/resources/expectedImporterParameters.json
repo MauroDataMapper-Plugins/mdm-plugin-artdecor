@@ -6,7 +6,6 @@
     "namespace": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor",
     "allowsExtraMetadataKeys": true,
     "knownMetadataKeys": [
-
     ],
     "providerType": "DataModelImporter",
     "paramClassType": "uk.ac.ox.softeng.maurodatamapper.plugins.artdecor.provider.importer.parameter.ArtDecorDataModelImporterProviderServiceParameters",
@@ -107,6 +106,18 @@
           "optional": true,
           "displayName": "Model Description",
           "description": "The description of the Model being imported"
+        }
+      ]
+    },
+    {
+      "name": "Import Process",
+      "parameters": [
+        {
+          "name": "asynchronous",
+          "type": "Boolean",
+          "optional": false,
+          "displayName": "Import Asynchronously",
+          "description": "Choose to start the import process asynchronously. The import process will need to checked via the returned AsyncJob to see when its completed. Any errors which occur whilst importing can also be seen here. Default is false."
         }
       ]
     }
