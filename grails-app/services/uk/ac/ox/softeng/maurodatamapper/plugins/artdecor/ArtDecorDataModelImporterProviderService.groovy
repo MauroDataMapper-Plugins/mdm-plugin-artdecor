@@ -62,6 +62,11 @@ class ArtDecorDataModelImporterProviderService extends DataModelImporterProvider
     }
 
     @Override
+    Boolean handlesContentType(String contentType) {
+        contentType.equalsIgnoreCase('application/json')
+    }
+
+    @Override
     DataModel importModel(User user, ArtDecorDataModelImporterProviderServiceParameters params) {
         log.debug('Import model')
         importModels(user, params)?.first()
